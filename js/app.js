@@ -35,7 +35,6 @@ function tweetQuoteInfo() {
 }
 
 $(document).ready(function() {
-  setQuote();
   loadQuote();
   $('#new-quote').click(newQuoteRequest);
   $('#tweet-quote').click(tweetQuoteInfo);
