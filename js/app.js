@@ -1,6 +1,6 @@
 var quotes = [
-  {quote: "I don't know why we are here, but I'm pretty sure that it is not in order to enjoy ourselves",
-   author: "Ludwig Wittgenstein"}
+  {quote: "When you do the common things in life in an uncommon way, you will command the attention of the world.",
+   author: "Joe Turnham"}
 ];
 
 function loadQuote() {
