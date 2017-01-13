@@ -16,7 +16,8 @@ function loadQuote() {
   });
 }
 
-function newQuoteRequest() {
+function newQuoteRequest(e) {
+    e.preventDefault();
     quotes.shift();
     loadQuote();  
     setQuote();  
