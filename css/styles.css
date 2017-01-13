@@ -84,7 +84,7 @@ body {
 
 }
 
-.arrow-right {
+.quote-next {
   right: -125px;
   top: 160px;
   width: 0; 
@@ -92,8 +92,8 @@ body {
   position:absolute;
   border-top: 60px solid transparent;
   border-bottom: 60px solid transparent;
-  
   border-left: 60px solid #fff;
+  cursor: pointer;
 }
 
 .arrow-right:hover {
