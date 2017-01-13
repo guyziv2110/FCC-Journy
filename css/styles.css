@@ -98,3 +98,8 @@ body {
 .quote-next:hover {
   border-left-color:#efeede;
 }
+
+div.disabled {
+   pointer-events: none;
+   cursor: default;
+}
