@@ -8,7 +8,6 @@ body {
    background: #FC452B;
 }
 
-
 .quote-container {
   margin-top:35px; 
   position:relative;
@@ -96,6 +95,6 @@ body {
   cursor: pointer;
 }
 
-.arrow-right:hover {
-  border-left-color:#ffeede;
+.quote-next:hover {
+  border-left-color:#efeede;
 }

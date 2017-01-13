@@ -23,7 +23,6 @@ function newQuoteRequest(e) {
     setQuote();  
 }
 
-
 function setQuote() {
     var currentQuote = quotes[0];
     setQuoteElement(".quote-text", currentQuote.quote);
@@ -35,13 +34,6 @@ function tweetQuoteInfo() {
               + encodeURIComponent('"' + quotes[0].quote + '" -' + quotes[0].author));
 }
 
-$(document).ready(function() {
-  loadQuote();
-  $('#new-quote').click(newQuoteRequest);
-  $('#tweet-quote').click(tweetQuoteInfo);
-});
-
-
 function setQuoteElement(quoteText, quote) {
   $(quoteText).animate({
     opacity: 0
@@ -52,3 +44,9 @@ function setQuoteElement(quoteText, quote) {
     $(quoteText).text(quote);
   });
 }
+
+$(document).ready(function() {
+  loadQuote();
+  $('#new-quote').click(newQuoteRequest);
+  $('#tweet-quote').click(tweetQuoteInfo);
+});
