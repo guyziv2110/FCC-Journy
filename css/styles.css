@@ -1,0 +1,8 @@
+html, body {
+    height: 100%;
+}
+
+body{
+    background: #222222 url('https://s20.postimg.org/jgpci10kt/IMG_253179.jpg') fixed center;
+    background-size: cover;
+}
