@@ -26,6 +26,10 @@ $(document).ready(function() {
         else {
             //alert('good');
         }
+
+        // maybe reload this image so it will load faster 
+        // OR resize the image so it will be smaller and be loaded faster.
+        $('.container').css('background-image', 'url(https://s20.postimg.org/aybrjblm5/snow_mountain_wallpaper_high_definition.jpg)');
         
     }, 6000);    
 });
@@ -34,7 +38,12 @@ function showLocation(position) {
     locationResolved = true;
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
+    getCurrentWeather(latitude, longitude, updateUI);
   //  alert("Latitude : " + latitude + " Longitude: " + longitude);
+}
+
+function updateUI(res) {
+    console.log(res);
 }
 
 function errorHandler(err) {
@@ -51,3 +60,12 @@ function errorHandler(err) {
     //alert(errMsg);
 }
 
+
+function getCurrentWeather(lat, lon, upUI) {
+    $.ajax({
+        url: 'http://api.openweathermap.org/data/2.5/weather?units=metric&lat=' + lat + '&lon=' + lon + '&appid=98c459191c68b713dc26be6eda890149',
+        success: function(response) {
+            upUI(response);
+        }
+    })
+}
