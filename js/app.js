@@ -29,7 +29,8 @@ $(document).ready(function() {
 
         // maybe reload this image so it will load faster 
         // OR resize the image so it will be smaller and be loaded faster.
-        $('.container').css('background-image', 'url(https://s20.postimg.org/aybrjblm5/snow_mountain_wallpaper_high_definition.jpg)');
+        
+        //$('.container').css('background-image', 'url()');
         
     }, 6000);    
 });
@@ -44,6 +45,11 @@ function showLocation(position) {
 
 function updateUI(res) {
     console.log(res);
+    var weatherCondition = getWeatherCondition(res.weather[0].icon);
+    console.log(weatherCondition);
+    if(weatherCondition !== 'clear-sky-day' && weatherCondition !== 'clear-sky-night'
+        && weatherCondition !== 'few-clouds-day' && weatherCondition !== 'few-clouds-night')
+        $('.container').removeClass('hot-weather').addClass('cold-weather');
 }
 
 function errorHandler(err) {
@@ -68,4 +74,46 @@ function getCurrentWeather(lat, lon, upUI) {
             upUI(response);
         }
     })
+}
+
+function getWeatherCondition(weatherIcon) {
+    switch(weatherIcon) {
+        case '01d': return 'clear-sky-day';
+                    break;
+        case '01n': return 'clear-sky-night';
+                    break;
+        case '02d': return 'few-clouds-day';
+                    break;
+        case '02n': return 'few-clouds-night';
+                    break;                    
+        case '03d': return 'scattered-clouds-day';
+                    break;
+        case '03n': return 'scattered-clouds-night';
+                    break;                                
+        case '04d': return 'broken-clouds-day';
+                    break;
+        case '04n': return 'broken-clouds-night';
+                    break;
+        case '09d': return 'shower-rain-day';
+                    break;
+        case '09n': return 'shower-rain-night';
+                    break;      
+        case '10d': return 'rain-day';
+                    break;
+        case '10n': return 'rain-night';
+                    break; 
+        case '11d': return 'thunderstorm-day';
+                    break;
+        case '11n': return 'thunderstorm-night';
+                    break;
+        case '13d': return 'snow-day';
+                    break;
+        case '13n': return 'snow-night';
+                    break;    
+        case '50d': return 'mist-day';
+                    break;
+        case '50n': return 'mist-night';
+                    break;                                                                                                               
+    }
+
 }

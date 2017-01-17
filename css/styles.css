@@ -4,8 +4,15 @@ html, body {
     height: 100%;
 }
 
-.container{
+.hot-weather {
     background: #222222 url('https://s20.postimg.org/jgpci10kt/IMG_253179.jpg') fixed center;
+}
+
+.cold-weather {
+    background: #222222 url('https://s20.postimg.org/aybrjblm5/snow_mountain_wallpaper_high_definition.jpg') fixed center;
+}
+
+.container{
     background-size: cover;
     transition: background 1s linear;
     height: 100%;
@@ -13,6 +20,7 @@ html, body {
 }
 
 .local-weather-title {
+    margin-top:20px;
     font-family: 'Pacifico';
     color: #fff;
     font-size: 36px;
