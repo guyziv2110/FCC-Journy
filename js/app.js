@@ -50,6 +50,8 @@ function updateUI(res) {
     if(weatherCondition !== 'clear-sky-day' && weatherCondition !== 'clear-sky-night'
         && weatherCondition !== 'few-clouds-day' && weatherCondition !== 'few-clouds-night')
         $('.container').removeClass('hot-weather').addClass('cold-weather');
+
+    
 }
 
 function errorHandler(err) {

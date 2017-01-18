@@ -17,6 +17,18 @@ html, body {
     transition: background 1s linear;
     height: 100%;
     width: 100%;
+    display: table;
+    opacity: 0.7;
+    
+}
+
+.inner-container {
+    /*display: table-cell;*/
+    vertical-align: middle;
+    width:300px;
+    background-color: black;
+    opacity: 0.4;
+    margin: 0 auto;
 }
 
 .local-weather-title {
@@ -24,4 +36,33 @@ html, body {
     font-family: 'Pacifico';
     color: #fff;
     font-size: 36px;
+    
+    
+    z-index: 10000;   
+    position: relative;
+     
 }
+
+.inner-local-weather-title {
+
+}
+
+.local-weather-info {
+    margin-top:20px;
+    font-family: 'Pacifico';
+    color: #fff;
+    font-size: 36px;
+}
+
+.local-weather-info div {
+    display: inline-block;
+}
+
+.local-weather-icon {
+    background-image:url('https://s20.postimg.org/e3wtswl65/01d.png');
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    zoom: 1.5;        
+}
+
