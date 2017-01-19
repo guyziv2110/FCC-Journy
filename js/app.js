@@ -55,6 +55,9 @@ function updateUI(res) {
 }
 
 function errorHandler(err) {
+
+    /*go to a WEB API as 2nd choice to get the result*/
+    
     console.log(err);
     var errMsg;
     if(err.code == 1) {
@@ -70,6 +73,7 @@ function errorHandler(err) {
 
 
 function getCurrentWeather(lat, lon, upUI) {
+    console.log('http://api.openweathermap.org/data/2.5/weather?units=metric&lat=' + lat + '&lon=' + lon + '&appid=98c459191c68b713dc26be6eda890149');
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/weather?units=metric&lat=' + lat + '&lon=' + lon + '&appid=98c459191c68b713dc26be6eda890149',
         success: function(response) {
