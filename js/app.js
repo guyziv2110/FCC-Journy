@@ -62,6 +62,31 @@ function updateUI(res) {
     $('.local-weather-icon').css('background-image', getWeatherIcon(res));
     $('.local-weather-description').text(getWeatherDescription(res));    
     $('.local-weather-info').css('opacity', '1');
+    $('.local-weather-degrees').click(function() {
+        var val = parseFloat($(this).text());
+        var typ;
+        var res;
+        if($(this).hasClass('celsius')) {
+            res = convertToFahrenheit(val);
+            typ = String.fromCharCode(8457);
+            $(this).removeClass('celsius').addClass('fahrenheit');
+        }
+        else {
+            res = convertToCelsius(val);
+            typ = String.fromCharCode(8451);
+            $(this).removeClass('fahrenheit').addClass('celsius');
+        }
+
+        $(this).text(res + typ);
+    });
+}
+
+function convertToFahrenheit(cels) {
+    return Math.round((cels * (9 / 5)) + 32);
+}
+
+function convertToCelsius(fare) {
+    return Math.round((fare - 32) * (5 / 9));
 }
 
 /* Generic location helpers */
@@ -79,7 +104,7 @@ function splitLocation (loc) {
 function getWeatherDegrees(weatherObj) {
     var deg = Math.round(weatherObj.main.temp);
 
-    return deg + String.fromCharCode(176);
+    return deg + String.fromCharCode(8451);
 }
 
 function getWeatherIcon(weatherObj) {
