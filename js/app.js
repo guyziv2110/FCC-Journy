@@ -1,125 +1,96 @@
-/*navigator.geolocation.getCurrentPosition(function(location) {
-  console.log(location.coords.latitude);
-  console.log(location.coords.longitude);
-  console.log(location.coords.accuracy);
-  console.log(location);
-});*/
 var locationResolved = false;
+var geoLocationError = 'No geolocation support available.';
+var appId = '98c459191c68b713dc26be6eda890149';
 
 window.onload = function() {
-    if(navigator.geolocation)
-    {
-        var options = {timeout:3000};
-        navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
-    }
-    else {
-        //alert("NO");
-    }
+    geolocationFirstPlan();
 };
 
-$(document).ready(function() {
-    setTimeout(function() {
-        if(!locationResolved) {
-          //  alert('failed');
-        }
-        // location already resolved
-        else {
-            //alert('good');
-        }
+function geolocationFirstPlan() {
+    var location_timeout = setTimeout(function() {onGeolocationTimeout(geoLocationError);}, 2000);
 
-        // maybe reload this image so it will load faster 
-        // OR resize the image so it will be smaller and be loaded faster.
-        
-        //$('.container').css('background-image', 'url()');
-        
-    }, 6000);    
-});
+    if(navigator.geolocation)
+    {
+        var options = {timeout:1000,maximumAge:0};
+        navigator.geolocation.getCurrentPosition(onGeolocationLocationResolved, geolocationSecondPlan, options);
+    }
+    else {
+        geolocationSecondPlan();
+    }
+}
 
-function showLocation(position) {
-    locationResolved = true;
+function geolocationSecondPlan() {
+    $.ajax({
+        url: 'http://ipinfo.io/json',
+        success: function(response) {
+            locationResolved = true;
+            var pos = splitLocation(response.loc);
+            getCurrentWeather(pos.lat, pos.lon, updateUI);
+        }
+    });
+}
+
+/* timeouts/errors */
+function onGeolocationTimeout(errMsg) {
+    if(!locationResolved) {
+        $('.local-weather-error').text(errMsg);
+        $('.local-weather-error').css('display', 'block');
+        $('.local-weather-info').css('opacity', '1');
+    }        
+}
+
+function onGeolocationLocationResolved(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
+
+    locationResolved = true;
     getCurrentWeather(latitude, longitude, updateUI);
-  //  alert("Latitude : " + latitude + " Longitude: " + longitude);
 }
-
-function updateUI(res) {
-    console.log(res);
-    var weatherCondition = getWeatherCondition(res.weather[0].icon);
-    console.log(weatherCondition);
-    if(weatherCondition !== 'clear-sky-day' && weatherCondition !== 'clear-sky-night'
-        && weatherCondition !== 'few-clouds-day' && weatherCondition !== 'few-clouds-night')
-        $('.container').removeClass('hot-weather').addClass('cold-weather');
-
-    
-}
-
-function errorHandler(err) {
-
-    /*go to a WEB API as 2nd choice to get the result*/
-    
-    console.log(err);
-    var errMsg;
-    if(err.code == 1) {
-        errMsg = "Error: Access is denied! (Reason : " + err.message +")";
-    }
-
-    else if( err.code == 2) {
-        errMsg = "Error: Position is unavailable! (Reason : " + err.message +")";
-    }
-
-    //alert(errMsg);
-}
-
 
 function getCurrentWeather(lat, lon, upUI) {
-    console.log('http://api.openweathermap.org/data/2.5/weather?units=metric&lat=' + lat + '&lon=' + lon + '&appid=98c459191c68b713dc26be6eda890149');
     $.ajax({
-        url: 'http://api.openweathermap.org/data/2.5/weather?units=metric&lat=' + lat + '&lon=' + lon + '&appid=98c459191c68b713dc26be6eda890149',
+        url: 'http://api.openweathermap.org/data/2.5/weather?units=metric&lat=' + lat + '&lon=' + lon + '&appid=' + appId,
         success: function(response) {
             upUI(response);
         }
-    })
+    });
 }
 
-function getWeatherCondition(weatherIcon) {
-    switch(weatherIcon) {
-        case '01d': return 'clear-sky-day';
-                    break;
-        case '01n': return 'clear-sky-night';
-                    break;
-        case '02d': return 'few-clouds-day';
-                    break;
-        case '02n': return 'few-clouds-night';
-                    break;                    
-        case '03d': return 'scattered-clouds-day';
-                    break;
-        case '03n': return 'scattered-clouds-night';
-                    break;                                
-        case '04d': return 'broken-clouds-day';
-                    break;
-        case '04n': return 'broken-clouds-night';
-                    break;
-        case '09d': return 'shower-rain-day';
-                    break;
-        case '09n': return 'shower-rain-night';
-                    break;      
-        case '10d': return 'rain-day';
-                    break;
-        case '10n': return 'rain-night';
-                    break; 
-        case '11d': return 'thunderstorm-day';
-                    break;
-        case '11n': return 'thunderstorm-night';
-                    break;
-        case '13d': return 'snow-day';
-                    break;
-        case '13n': return 'snow-night';
-                    break;    
-        case '50d': return 'mist-day';
-                    break;
-        case '50n': return 'mist-night';
-                    break;                                                                                                               
-    }
+function updateUI(res) {
+    $('.local-weather-error').css('display', 'none');
+    $('.local-weather-degrees').text(getWeatherDegrees(res));
+    $('.local-weather-icon').css('background-image', getWeatherIcon(res));
+    $('.local-weather-description').text(getWeatherDescription(res));    
+    $('.local-weather-info').css('opacity', '1');
+}
 
+/* Generic location helpers */
+function splitLocation (loc) {
+    var obj = loc.split(',').reduce(function(acc, cur, i) {
+        var key = i ? 'lon' : 'lat';
+        acc[key] = cur;
+        return acc;
+    }, {});
+
+    return obj;
+}
+
+/* Weather helpers */
+function getWeatherDegrees(weatherObj) {
+    var deg = Math.round(weatherObj.main.temp);
+
+    return deg + String.fromCharCode(176);
+}
+
+function getWeatherIcon(weatherObj) {
+    var iconCode = weatherObj.weather[0].icon;
+    var iconUrl = "url(http://openweathermap.org/img/w/" + iconCode + ".png)"
+
+    return iconUrl;
+}
+
+function getWeatherDescription(weatherObj) {
+    var desc = weatherObj.weather[0].description;
+
+    return desc.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }

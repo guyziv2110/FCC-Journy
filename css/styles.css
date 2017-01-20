@@ -6,12 +6,8 @@ html, body {
     height: 100%;
 }
 
-.hot-weather {
-    background: #222222 url('https://s20.postimg.org/ybeuyy819/intro5.png') fixed center;
-}
-
-.cold-weather {
-    background: #222222 url('https://s20.postimg.org/aybrjblm5/snow_mountain_wallpaper_high_definition.jpg') fixed center;
+.weather-container {
+    background: #222222 url('https://s20.postimg.org/6ms7rfl0t/intro5.jpg') fixed center;
 }
 
 .container{
@@ -49,6 +45,8 @@ html, body {
     font-family: 'Lato';
     color: #fff;
     font-size: 36px;
+    opacity:0;
+    transition: opacity 1s ease-out;
 }
 
 .local-weather-info div {
@@ -56,9 +54,11 @@ html, body {
 }
 
 .local-weather-icon {
-    background-image:url('https://s20.postimg.org/e3wtswl65/01d.png');
     width: 50px;
     height: 50px;
-    vertical-align: middle;
-    zoom: 1.5;        
+    vertical-align: middle;   
+}
+
+.local-weather-info div.local-weather-error {
+    display: none;
 }
