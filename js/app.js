@@ -19,3 +19,10 @@ function getWikipediaArticles() {
 }
 
 getWikipediaArticles();
+
+$(document).ready(function() {
+    $('.wiki-button').click(function(e) {
+        console.log('search');
+    });
+
+});

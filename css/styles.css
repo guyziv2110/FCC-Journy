@@ -123,4 +123,5 @@ html, body {
 
 .wiki-search-container {
     padding:30px;
+    position: relative;
 }
