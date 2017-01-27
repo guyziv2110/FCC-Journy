@@ -7,7 +7,7 @@
   </head>
   <body>
     <div class="container wikipedia-container">
-      <div class="wikipedia-inner-container ">
+      <div class="wikipedia-inner-container first-load-mode">
         <div class="text-center wiki-header">
           Wikipedia Viewer
         </div>
@@ -21,24 +21,38 @@
           <div class="text-center wiki-search-container">          
             <input type="search" class="wiki-search"/>
           </div>
-          <div>
-            <a class="button button-primary wiki-button">Search</a>              
+          <div class="noselect">
+            <a class="button button-primary wiki-button wiki-search-button">Search</a>              
             <a href="http://en.wikipedia.org/wiki/Special:Random" target="_blank" class="button button-primary wiki-button">Feel Lucky?</a>              
           </div>
         </div>
 
-        <!--<ul class="wikipedia-search-items">
-            <a href="#" class="wikipedia-search-item-link">
-              <li class="wikipedia-search-item">
-                  <div class="wikipedia-search-item-header">
-                    A
-                  </div>
-                  <div class="wikipedia-search-item-description">
-                    A (named /ˈeɪ/, plural As, A's, as, a's or aes) is the first letter and the first vowel in the ISO basic Latin alphabet."
-                  </div>              
-              </li>
-            </a>
-        </ul>-->
+        
+      </div>
+
+      <div class="wikipedia-inner-container after-search-mode">
+        <div class="wikipedia-top-header">
+          <div class="wiki-header noselect">
+            WV
+          </div>
+
+          <div class="wiki-search-container">          
+            <input type="search" class="wiki-search"/>
+          </div>   
+
+          <div>
+            <a class="wiki-search-link">Search</a>              
+          </div>                 
+
+          <div class="wiki-feel-lucky-container">
+            <a href="http://en.wikipedia.org/wiki/Special:Random" target="_blank" class="">Feel Lucky?</a>              
+          </div>
+        </div>
+
+
+        <div class="wikipedia-search-results">
+          
+        </div>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
