@@ -1,3 +1,24 @@
+var lastSearch;
+var isAfterSearchMode = false;
+
+$(document).ready(function() {
+    $('.first-load-mode .wiki-search').focus();
+
+    $('.wiki-search-button').click(function(e) {
+        searchRequest();
+    });
+
+    $('.wiki-search-link').click(function(e) {
+        searchRequest();
+    });
+
+    $('.wiki-search').keyup(function(e) {
+        if (e.keyCode == 13) {
+            searchRequest();
+        }        
+    });
+});
+
 function getWikipediaArticles(searchString) {
     //https://www.mediawiki.org/wiki/Extension:TextExtracts
     var apiSearchURL = "https://en.wikipedia.org/w/api.php" + 
@@ -13,61 +34,75 @@ function getWikipediaArticles(searchString) {
                                         "&exsentences=1" +
                                         "&exlimit=max" +
                                         "&gsrsearch=" + searchString; 
-                                        
     return $.ajax({
         url: apiSearchURL,
         dataType: "jsonp"
     });
-    console.log(apiSearchURL);
-
 }
 
-$(document).ready(function() {
-    var isFirstLoadMode = true;
-    $('.wiki-search-button').click(function(e) {
-        if(isFirstLoadMode && hasSearchInput()) {
+function searchRequest() {    
+    if(!isAfterSearchMode) {
+        var wikiSearchInput = $('.first-load-mode .wiki-search').val();
+        if(hasSearchInput(wikiSearchInput)) {
+            $('.after-search-mode .wiki-search').val($('.first-load-mode .wiki-search').val());
             $('.after-search-mode').css('opacity', '1');
             $('.first-load-mode').css({'opacity':'0', display: 'none'});
-            var wikiSearchInput = $('.wiki-search').val();
-            loadWikipediaArticles(wikiSearchInput);            
-            isFirstLoadMode = false;
+            isAfterSearchMode = true;
+            $('.after-search-mode .wiki-search').focus();
         }
-    });
+    }
 
-    $('.wiki-search').keyup(function() {
-        $('.wiki-search').val($(this).val());;
-    })
-});
+    if (isAfterSearchMode) {
+        var wikiSearchInput = $('.after-search-mode .wiki-search').val();
+        if(hasSearchInput(wikiSearchInput)) {
+            if(wikiSearchInput !== lastSearch) {
+                loadWikipediaArticles(wikiSearchInput);            
+                lastSearch = wikiSearchInput;
+            }
+        }
+    }    
+}
 
+function hasSearchInput(searchInput) {
+    return searchInput !== undefined && searchInput.length > 0;
+}
 
+function clearWikipediaArticles() {
+    $('.wikipedia-search-results').empty();
+}
 
-function hasSearchInput() {
-    var wikiSearchInput = $('.wiki-search').val();
-    return wikiSearchInput !== undefined && wikiSearchInput.length > 0;
+function analyzeWikipediaArticles(resultQuery) {
+    if(resultQuery === undefined || resultQuery.pages.length === 0) {
+        $('.wikipedia-search-results').append("<div class='text-center no-matches'>No matches found.</div>")
+    }
+    else {
+        appendWikipediaArticles(resultQuery.pages);
+    }
 }
 
 function loadWikipediaArticles(wikiSearchInput) {
     var promise = getWikipediaArticles(wikiSearchInput);
     promise.done(function(result) 
     {
-        appendWikipediaArticles(result.query.pages);
+        $('.wikipedia-search-results').fadeOut(70, function(){
+            clearWikipediaArticles();
+            analyzeWikipediaArticles(result.query);
+        }).fadeIn();
+
     });    
 }
 
 function appendWikipediaArticles(wikipediaArticles) {
-    console.log(wikipediaArticles);
-    if(wikipediaArticles.length === 0) return;
-    
     $('.wikipedia-search-results').append("<ul class='wikipedia-search-items'></ul>")
     
     Object.keys(wikipediaArticles).forEach(function(obj) {
         $('.wikipedia-search-items').append(("\
-            <a href='#' class='wikipedia-search-item-link'>\
+            <a href='https://en.wikipedia.org/?curid={pageid}' target='_blank' class='wikipedia-search-item-link'>\
                 <li class='wikipedia-search-item'>\
                     <div class='wikipedia-search-item-header'>\
                         {title}\
                     </div>\
-                    <div class='wikipedia-search-item-description'>\
+                    <div class='wikipedia-search-item-description dot-ellipsis'>\
                         {extract}\
                     </div>\
                 </li>\
@@ -76,6 +111,4 @@ function appendWikipediaArticles(wikipediaArticles) {
             return wikipediaArticles[obj][n] 
         }));
     });
-
-    
 }
