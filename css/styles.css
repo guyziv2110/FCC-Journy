@@ -1,0 +1,9 @@
+.channel-panel {
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  width: 220px;
+  background-color: #17141f;
+  color: #898395;
+  left: 0px;
+}
