@@ -1,9 +1,48 @@
-.channel-panel {
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Cabin');
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+
+.channels-panel {
   position: fixed;
   z-index: 1;
   height: 100%;
-  width: 220px;
+  width: 275px;
   background-color: #17141f;
   color: #898395;
   left: 0px;
+  transition: 0.5s;
+}
+
+.channels-panel.closed {
+  margin-left: -275px;
+}
+
+.header-container {
+  margin-top: 20px;
+}
+
+.channels-panel .header-image {
+  background: url(../../assets/twitch_tv/twitch-logo_1.png);
+  width: 135px;
+  height: 45px;
+  margin: auto;
+}
+
+.channels-panel .sub-header {
+  margin-top: 10px;
+  font-size: 30px;
+  font-family: 'Arvo';
+  font-style: italic;
+}
+
+hr {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), #6441a4, rgba(0, 0, 0, 0));
+  border: 0px;
+  height: 1px;
+}
+
+.channels-list-header {
+  margin: auto;
+  font-size:15px;
+  font-family: 'Arvo';
 }
