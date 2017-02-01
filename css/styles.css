@@ -46,3 +46,28 @@ hr {
   font-size:15px;
   font-family: 'Arvo';
 }
+
+#fav-streamers-list {
+  margin-left: 0;
+  max-height: 275px;
+  overflow: auto;
+  margin-top: 20px;
+}
+
+#fav-streamers-list li {
+  list-style: none;
+}
+
+#fav-streamers-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+#fav-streamers-list::-webkit-scrollbar-thumb {
+  background-color: #6441a4;
+  outline: 1px solid #6441a4;
+}
+
+.fav-streamer a{
+    color: #898395;
+    font-size: 15px;
+}
