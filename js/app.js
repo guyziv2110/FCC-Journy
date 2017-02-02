@@ -10,6 +10,9 @@ with stream:
 https://api.twitch.tv/kraken/streams/esl_sc2/?client_id=e6chpbil9u09n2xi2yg8uj5mxzmum8
 */
 
+var userFaveStreamersChannels = ["ESL_SC2", "OgamingSC2", "cretetion", "brunofin", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas", "amouranth", "slothtimelord", "thehypercraft", "comster404"];
+var clientKey = 'e6chpbil9u09n2xi2yg8uj5mxzmum8';
+
 if (!String.format) {
   String.format = function(format) {
     var args = Array.prototype.slice.call(arguments, 1);
@@ -36,14 +39,47 @@ $(window).resize(function() {
 
 $(document).ready(function() {
     populateFaveStreamersList();
-
+    fetchFaveStreamersChannels();
 });
 
+
+function fetchFaveStreamersChannels() {
+    for (var i = 0; i < userFaveStreamersChannels.length; i++) {
+        var channel = userFaveStreamersChannels[i];
+        fetchChannel(channel);
+    }
+}
+
+function fetchChannel(channel) {
+    var channelUrl = 'https://api.twitch.tv/kraken/streams/' + channel + '/?client_id=' + clientKey;
+    var fetchPromise = fetch(channelUrl);
+
+    fetchPromise.done(function(res) {
+        parseApiResponse(channel, res);
+    });
+}
+
+function fetch(channelUrl) {
+    return $.ajax({
+        url: channelUrl
+    });
+}
+
+function parseApiResponse(channel, res) {
+    if(res === undefined || res === null) {
+        $('#fav-streamer-' + channel).addClass('not-found');
+    }
+    else if(res.stream === null) {
+        $('#fav-streamer-' + channel).addClass('offline');
+    }
+    else {
+        $('#fav-streamer-' + channel).addClass('online');
+    }
+}
+
 function populateFaveStreamersList() {
-    var faveStreamersChannels = ['1', '2', '3','4', '5', '6', '7', '8', '9', 'a1', 'a2', 'a3'];
-    faveStreamersChannels = faveStreamersChannels.concat(['1', '2', '3','4', '5', '6', '7', '8', '9', 'a1', 'a2', 'a3']);
-    for (var i = 0; i < faveStreamersChannels.length; i++) {
-        var channel = faveStreamersChannels[i];
+    for (var i = 0; i < userFaveStreamersChannels.length; i++) {
+        var channel = userFaveStreamersChannels[i];
         appendFaveStreamerToList(channel);
     }    
 }
@@ -53,7 +89,7 @@ function appendFaveStreamerToList(channel) {
     <li class='fav-streamer' id='fav-streamer-{0}'> \
         <a class='link-{0}' href='#'>{0}</a>\
         <span class='delete-fave-stream' id='delete-{0}'> \
-            <i class='fa fa-video-camera' aria-hidden='true'></i> \
+            <i class='fa fa-trash-o' aria-hidden='true'></i> \
         </span> \
     </li>", channel);
 

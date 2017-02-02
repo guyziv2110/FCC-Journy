@@ -6,7 +6,7 @@
   position: fixed;
   z-index: 1;
   height: 100%;
-  width: 275px;
+  width: 250px;
   background-color: #17141f;
   color: #898395;
   left: 0px;
@@ -54,10 +54,6 @@ hr {
   margin-top: 20px;
 }
 
-#fav-streamers-list li {
-  list-style: none;
-}
-
 #fav-streamers-list::-webkit-scrollbar {
   width: 5px;
 }
@@ -70,4 +66,39 @@ hr {
 .fav-streamer a{
     color: #898395;
     font-size: 15px;
+}
+
+#fav-streamers-list li {
+  list-style: none;
+  padding: 4px;
+}
+
+#fav-streamers-list li.online::before {
+  color: #24be51;
+  font-size: 15px;
+}
+
+#fav-streamers-list li.offline::before {
+  color: #f68d13;
+  font-size: 15px;
+}
+
+#fav-streamers-list li.not-found::before {
+  color: #c3351a;
+  font-size: 15px;
+}
+
+#fav-streamers-list li:before {
+  content: "\f03d";
+  font-family: FontAwesome;
+  color: #898395;
+  display: inline-block;
+  margin-left: -20px;
+  width: 30px;
+}
+
+.delete-fave-stream {
+  float: right;
+  margin-right: 15px;
+  font-size: 16px;
 }
