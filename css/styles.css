@@ -6,11 +6,41 @@
   position: fixed;
   z-index: 1;
   height: 100%;
-  width: 250px;
+  width: 260px;
   background-color: #17141f;
   color: #898395;
   left: 0px;
   transition: 0.5s;
+}
+
+.channel-featured-content.full {
+  margin-left: 0px;
+}
+
+.channel-featured-content {
+  margin-left: 195px;
+  position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.channel-live-channels-details {
+  margin-top: 25px;
+}
+
+.channel-live-channels-details-header {
+  color: #897495;
+  font-family: 'Arvo';
+  font-style: italic;
+  font-size: 45px;
 }
 
 .channels-panel.closed {
@@ -39,6 +69,12 @@ hr {
   background: linear-gradient(to right, rgba(0, 0, 0, 0), #6441a4, rgba(0, 0, 0, 0));
   border: 0px;
   height: 1px;
+}
+
+.additional-info-sep {
+  background: linear-gradient(to right, rgba(100, 65, 164, 0.1), #899195, rgba(100, 65, 164, 0.1));
+  margin-top: 12px;
+  margin-bottom: 6px;  
 }
 
 .channels-list-header {
@@ -101,4 +137,59 @@ hr {
   float: right;
   margin-right: 15px;
   font-size: 16px;
+  cursor: pointer;
+}
+
+.fav-box {
+  min-width: 300px;
+  max-width: 640px;
+  width: 300px;
+  display: inline-block;
+  margin: 35px;
+  vertical-align: top;
+}
+
+.fav-box img {
+  max-width: 100%;
+}
+
+.fav-box-information {
+  border: 1px solid lightgray;
+  border-top: 0px;
+  min-height: 160px;
+}
+
+.fav-box-information div {
+  font-size: 14px;
+  color: black;
+  font-family: 'Cabin';
+  padding:1px;
+  color: #899195;
+}
+
+.fav-box-information div.additional-info div {
+  font-size: 12px;
+}
+
+.fav-box-information div.fav-box-channel-name {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.fav-box-information div.fav-box-game-name {
+  font-size:16px;
+}
+
+.fav-status {
+  min-height: 40px;
+  max-height: 50px;
+}
+
+#channel-panel-handle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color:#898395;
+  cursor: pointer;
 }
