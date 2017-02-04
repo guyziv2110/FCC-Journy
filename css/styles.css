@@ -5,7 +5,7 @@
   position: fixed;
   z-index: 1;
   height: 100%;
-  width: 260px;
+  width: 270px;
   background-color: #17141f;
   color: #898395;
   left: 0px;
@@ -32,12 +32,11 @@
 }
 
 .channel-add {
-  margin:20px;
-  margin-top: 35px;
+  margin: 20px 0px;
 }
 
 .channel-add input {
-  margin-right: 28px;
+  margin-left: 20px;
   background-color: #32384f;
   outline: none;
   text-align: center;
@@ -45,6 +44,13 @@
   border: solid 1px #897495;
   border-radius: 8px;
   color: #fff;  
+}
+
+.add-new-channel {
+  cursor: pointer;
+  float: right;
+  margin-right: 25px;
+  padding-top: 5px;
 }
 
 .clear-local-storage input {
@@ -56,10 +62,6 @@
     vertical-align: middle;
     height: 25px;
     line-height: 25px;
-}
-
-.add-new-channel {
-  cursor: pointer;
 }
 
 .channel-live-channels-details {
@@ -82,7 +84,7 @@
 }
 
 .channels-panel .header-image {
-  background: url(../../assets/twitch_tv/twitch-logo_1.png);
+  background: url(https://s20.postimg.org/bw3s2s17x/twitch_logo_1.png);
   width: 135px;
   height: 45px;
   margin: auto;
