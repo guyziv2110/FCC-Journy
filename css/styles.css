@@ -32,6 +32,37 @@
   transition: 0.5s;
 }
 
+.channel-add {
+  margin:20px;
+  margin-top: 35px;
+}
+
+.channel-add input {
+  margin-right: 28px;
+  background-color: #32384f;
+  outline: none;
+  text-align: center;
+  font-weight: 400;
+  border: solid 1px #897495;
+  border-radius: 8px;
+  color: #fff;  
+}
+
+.clear-local-storage input {
+    background-color: #32384f;
+    color: #fff;
+    border: solid 1px #897495;
+    width: 230px;
+    margin: 5px;
+    vertical-align: middle;
+    height: 25px;
+    line-height: 25px;
+}
+
+.add-new-channel {
+  cursor: pointer;
+}
+
 .channel-live-channels-details {
   margin-top: 25px;
 }
@@ -102,6 +133,13 @@ hr {
 .fav-streamer a{
     color: #898395;
     font-size: 15px;
+    width: 150px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;    
+    vertical-align: middle;
 }
 
 #fav-streamers-list li {
@@ -192,4 +230,14 @@ hr {
   left: 10px;
   color:#898395;
   cursor: pointer;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari*/
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
