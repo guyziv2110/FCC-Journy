@@ -10,3 +10,5 @@ The sum of a finite arithmetic progression is called an **Arithmetic Series** an
 <p align="center">
   <img src='arithmetic_series.gif'/>
 </p>
+
+Therefore, using our input (min, max) array, we only need to calculate the **Arithmetic Series** in order to compute all the numbers between min to max.
