@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Signika');
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+html, body {
+    height: 100%;
+}
+
+.weather-container {
+    background: #222222 url('https://s20.postimg.org/6ms7rfl0t/intro5.jpg') fixed center;
+}
+
+.container{
+    background-size: cover;
+    transition: background 1s linear;
+    height: 100%;
+    width: 100%;
+    display: table;
+}
+
+.inner-container {
+    margin-left: auto;
+    margin-right: auto;  
+    margin-top: 7%; 
+    width: 75%;
+    height: 410px;
+    vertical-align: middle;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.local-weather-title {
+    margin-top:51px;
+    font-family: 'Arvo';
+    color: #fff;
+    font-size: 70px;
+    font-family: arvo;
+    font-weight: 300;
+    letter-spacing: 6px;
+    z-index: 10000;   
+    position: relative;
+}
+
+.local-weather-info {
+    margin-top:20px;
+    font-family: 'Lato';
+    color: #fff;
+    font-size: 36px;
+    opacity:0;
+    transition: opacity 1s ease-out;
+}
+
+.local-weather-info div {
+    display: inline-block;
+}
+
+.local-weather-icon {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;   
+}
+
+.local-weather-info div.local-weather-error {
+    display: none;
+}
+
+.local-weather-degrees {
+    color: #f2dede;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari*/
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
