@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin');
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+
+.channels-panel {
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  width: 270px;
+  background-color: #17141f;
+  color: #898395;
+  left: 0px;
+  transition: 0.5s;
+}
+
+.channel-featured-content.full {
+  margin-left: 0px;
+}
+
+.channel-featured-content {
+  margin-left: 195px;
+  position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.channel-add {
+  margin: 20px 0px;
+}
+
+.channel-add input {
+  margin-left: 20px;
+  background-color: #32384f;
+  outline: none;
+  text-align: center;
+  font-weight: 400;
+  border: solid 1px #897495;
+  border-radius: 8px;
+  color: #fff;  
+}
+
+.add-new-channel {
+  cursor: pointer;
+  float: right;
+  margin-right: 25px;
+  padding-top: 5px;
+}
+
+.clear-local-storage input {
+    background-color: #32384f;
+    color: #fff;
+    border: solid 1px #897495;
+    width: 230px;
+    margin: 5px;
+    vertical-align: middle;
+    height: 25px;
+    line-height: 25px;
+}
+
+.channel-live-channels-details {
+  margin-top: 25px;
+}
+
+.channel-live-channels-details-header {
+  color: #897495;
+  font-family: 'Arvo';
+  font-style: italic;
+  font-size: 45px;
+}
+
+.channels-panel.closed {
+  margin-left: -275px;
+}
+
+.header-container {
+  margin-top: 20px;
+}
+
+.channels-panel .header-image {
+  background: url(https://s20.postimg.org/bw3s2s17x/twitch_logo_1.png);
+  width: 135px;
+  height: 45px;
+  margin: auto;
+}
+
+.channels-panel .sub-header {
+  margin-top: 10px;
+  font-size: 30px;
+  font-family: 'Arvo';
+  font-style: italic;
+}
+
+hr {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), #6441a4, rgba(0, 0, 0, 0));
+  border: 0px;
+  height: 1px;
+}
+
+.additional-info-sep {
+  background: linear-gradient(to right, rgba(100, 65, 164, 0.1), #899195, rgba(100, 65, 164, 0.1));
+  margin-top: 12px;
+  margin-bottom: 6px;  
+}
+
+.channels-list-header {
+  margin: auto;
+  font-size:15px;
+  font-family: 'Arvo';
+}
+
+#fav-streamers-list {
+  margin-left: 0;
+  max-height: 275px;
+  overflow: auto;
+  margin-top: 20px;
+}
+
+#fav-streamers-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+#fav-streamers-list::-webkit-scrollbar-thumb {
+  background-color: #6441a4;
+  outline: 1px solid #6441a4;
+}
+
+.fav-streamer a{
+    color: #898395;
+    font-size: 15px;
+    width: 150px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;    
+    vertical-align: middle;
+}
+
+#fav-streamers-list li {
+  list-style: none;
+  padding: 4px;
+}
+
+#fav-streamers-list li.online::before {
+  color: #24be51;
+  font-size: 15px;
+}
+
+#fav-streamers-list li.offline::before {
+  color: #f68d13;
+  font-size: 15px;
+}
+
+#fav-streamers-list li.not-found::before {
+  color: #c3351a;
+  font-size: 15px;
+}
+
+#fav-streamers-list li:before {
+  content: "\f03d";
+  font-family: FontAwesome;
+  color: #898395;
+  display: inline-block;
+  margin-left: -20px;
+  width: 30px;
+}
+
+.delete-fave-stream {
+  float: right;
+  margin-right: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.fav-box {
+  min-width: 300px;
+  max-width: 640px;
+  width: 300px;
+  display: inline-block;
+  margin: 35px;
+  vertical-align: top;
+}
+
+.fav-box img {
+  max-width: 100%;
+}
+
+.fav-box-information {
+  border: 1px solid lightgray;
+  border-top: 0px;
+  min-height: 160px;
+}
+
+.fav-box-information div {
+  font-size: 14px;
+  color: black;
+  font-family: 'Cabin';
+  padding:1px;
+  color: #899195;
+}
+
+.fav-box-information div.additional-info div {
+  font-size: 12px;
+}
+
+.fav-box-information div.fav-box-channel-name {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.fav-box-information div.fav-box-game-name {
+  font-size:16px;
+}
+
+.fav-status {
+  min-height: 40px;
+  max-height: 50px;
+}
+
+#channel-panel-handle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color:#898395;
+  cursor: pointer;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari*/
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
