@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TwitchTV App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vendors/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css"> 
+  </head>
+  <body>
+    <div class="container twitchtv-container">
+        <div class="channels-panel">
+          <div class="text-center header-container">
+            <div class="header-image"></div>
+            <div class="sub-header">Channel Panel</div>
+          </div>
+          <hr>
+          <div class="channels-list-container">
+              <div class="channels-list-header text-center">Favorite Streamers:</div>
+
+              <ul id="fav-streamers-list" class='noselect'>
+              </ul>     
+                   
+          </div>
+          <div class="channel-add">
+            <input type="text" placeholder="Add streamer"></input>
+            <i class="fa fa-plus add-new-channel" aria-hidden="true"></i>
+          </div>
+
+          <div class="clear-local-storage text-center">
+            <input type="button" class="button button-primary" value="Reset Streamers List"></input>
+          </div>
+        </div>
+        
+        <div class="channel-featured-content">
+            <div class="channel-live-channels-details text-center">
+              <h1 class="channel-live-channels-details-header">Live Channels</h1>
+              <hr>
+              <div id="fav-streamers-boxes-information">
+
+              </div>
+            </div>
+        </div>
+
+        <div id="channel-panel-handle">
+          <i class='fa fa-bars fa-2x' aria-hidden='true'></i>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
