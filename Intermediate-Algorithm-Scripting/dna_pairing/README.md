@@ -1,1 +1,1 @@
-# dna_pairing
+# DNA Pairing
