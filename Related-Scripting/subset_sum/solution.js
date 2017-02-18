@@ -68,6 +68,13 @@ function build_dp_table(set, sum) {
     return dp_table;
 }
 
+// dynamic programming subset solution
+/*
+var set = [1, 4, 9, 2];
+var sum = 5;
+console.log(dp_subsetsum(set, sum));
+*/
+
 function dp_subsetsum(set, sum) {
     var dp_table = build_dp_table(set, sum);
 
@@ -88,7 +95,3 @@ function dp_subsetsum(set, sum) {
 
     return dp_table[set.length][sum];
 }
-
-var set = [1, 4, 9, 2];
-var sum = 5;
-console.log(dp_subsetsum(set, sum));
