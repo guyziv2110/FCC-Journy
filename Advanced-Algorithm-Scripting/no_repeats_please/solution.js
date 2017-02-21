@@ -10,26 +10,69 @@ permAlone('aab');
 function perms(elem, permed) {
     // create adj list
     // when n == arr.length keep the perm.
+    var perm_result = [];
     if(permed.length === 0)
-        return [elem];
+        return [[elem]];
     else {
-        for (var i = 0; i < perm.length; i++) {
+        for (var i = 0; i < permed.length; i++) {
+            var right_perms = [];
+            var left_perms = [];             
             if (i % 2 === 0)
-                permed.push(rightPerms(elem, permed));
+                right_perms = (rightPerms(elem, permed[i]));
             else
-                permed.push(leftPerms(elem, permed));
+                left_perms = (leftPerms(elem, permed[i]));
+
+            perm_result = perm_result.concat(right_perms.concat(left_perms));
         }
     }
-    
+
+    return perm_result;
 }
 
-function permsStartup(arr, n) {
+function leftPerms(elem, permed) {
+    var left_permed = [];
+
+    for (var i = 0; i <= permed.length; i++) {
+        var curr_perm = permed;
+        var new_permed = curr_perm.slice();
+        new_permed.splice(curr_perm.length - i, 0, elem);
+        left_permed.push(new_permed);
+    }
+
+    return left_permed;
+}
+
+function rightPerms(elem, permed) {
+    var right_permed = [];
+
+    for (var i = 0; i <= permed.length; i++) {
+        var curr_perm = permed;
+        var new_permed = curr_perm.slice();
+        new_permed.splice(curr_perm.length - i, 0, elem);
+        right_permed.push(new_permed);
+    }
+
+    return right_permed;
+}
+
+function permsStartup(str) {
     var permed = [];
+    var arr = str.split('');
+    var n = arr.length;
+    var str_perms = [];
     for (var i = 0 ; i < n; i++) {
         permed = perms(arr[i], permed);
     }
+
+    for (var i = 0 ; i < permed.length; i++) {
+        var strs = permed[i].join('');
+        str_perms.push(strs);
+    }
+
 }
 
+
+permsStartup('ABCDE');
 //for example will be returned 
 /*
 step 1:
