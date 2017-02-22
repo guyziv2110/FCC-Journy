@@ -1,9 +1,3 @@
-function permAlone(str) {
-  return str;
-}
-
-permAlone('aab');
-
 // solution (SJT algoirthm)
 // https://en.wikipedia.org/wiki/Steinhaus%E2%80%93Johnson%E2%80%93Trotter_algorithm
 // https://mathlesstraveled.com/2013/01/03/the-steinhaus-johnson-trotter-algorithm/
@@ -32,10 +26,10 @@ function perms(elem, permed) {
 function leftPerms(elem, permed) {
     var left_permed = [];
 
-    for (var i = 0; i <= permed.length; i++) {
+    for (var i = 0; i <= permed.length; i++) {            
         var curr_perm = permed;
         var new_permed = curr_perm.slice();
-        new_permed.splice(curr_perm.length - i, 0, elem);
+        new_permed.splice(i, 0, elem);
         left_permed.push(new_permed);
     }
 
@@ -55,6 +49,16 @@ function rightPerms(elem, permed) {
     return right_permed;
 }
 
+// allows to continue on the loop when duplicates found
+// right perms checks: isDuplicate(elem, permed, permed.length - i )
+// left perms checks: isDuplicate(elem, permed, i )
+function isDuplicate(elem, permed, i) {
+    if(i >= 0 && i <= permed.length - 1)
+        if(permed[i] === elem)
+            return true;
+    return false;
+}
+
 function permsStartup(str) {
     var permed = [];
     var arr = str.split('');
@@ -69,25 +73,17 @@ function permsStartup(str) {
         str_perms.push(strs);
     }
 
+    return str_perms;
 }
 
+function permAlone(str) {
+  var consecutives_reg = /(.)\1+/g;
+  var perms = permsStartup(str);
+  var filtered_perms = perms.filter(function(perm) {
+    return !perm.match(consecutives_reg);
+  });  
 
-permsStartup('ABCDE');
-//for example will be returned 
-/*
-step 1:
-A
-step 2:
-AB
-BA
-step 3:
-ABC
-ACB
-CAB
-CBA
-BCA
-BAC
-step 4:....
-*/
+  return filtered_perms.length;
+}
 
-//function buildAdjList()
+console.log(permAlone('aaabb'));
