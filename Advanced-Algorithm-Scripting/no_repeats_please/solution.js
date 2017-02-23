@@ -59,7 +59,7 @@ function isDuplicate(elem, permed, i) {
     return false;
 }
 
-function permsStartup(str) {
+function permsGenerator(str) {
     var permed = [];
     var arr = str.split('');
     var n = arr.length;
@@ -78,7 +78,7 @@ function permsStartup(str) {
 
 function permAlone(str) {
   var consecutives_reg = /(.)\1+/g;
-  var perms = permsStartup(str);
+  var perms = permsGenerator(str);
   var filtered_perms = perms.filter(function(perm) {
     return !perm.match(consecutives_reg);
   });  
@@ -86,4 +86,4 @@ function permAlone(str) {
   return filtered_perms.length;
 }
 
-console.log(permAlone('aaabb'));
+console.log(permAlone('1234'));
