@@ -2,8 +2,6 @@
 // https://en.wikipedia.org/wiki/Steinhaus%E2%80%93Johnson%E2%80%93Trotter_algorithm
 // https://mathlesstraveled.com/2013/01/03/the-steinhaus-johnson-trotter-algorithm/
 function perms(elem, permed) {
-    // create adj list
-    // when n == arr.length keep the perm.
     var perm_result = [];
     if(permed.length === 0)
         return [[elem]];
