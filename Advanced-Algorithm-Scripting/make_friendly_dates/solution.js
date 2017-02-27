@@ -8,24 +8,33 @@ function makeFriendlyDates(arr) {
   var startDateObject = getDateObject(startDateValues);
   var endDateObject = getDateObject(endDateValues);
 
-  if (isSameDates(startDateObject, endDateObject)) 
+  if (isSameDates(startDateObject, endDateObject))
     return [buildFriendlyResult(startDateObject.year, startDateObject.month, startDateObject.day)];
+  if (monthsDiff(endDateObject, startDateObject) === 0 && dayDiff(endDateObject, startDateObject) > 0)
+    return [buildFriendlyResult("", startDateObject.month, startDateObject.day),
+            buildFriendlyResult("", "", endDateObject.day)];
+  else if (CURRENT_YEAR === startDateObject.year && monthsDiff(endDateObject, startDateObject) <= 12) 
+    return [buildFriendlyResult("", startDateObject.month, startDateObject.day),
+            buildFriendlyResult("", endDateObject.month, endDateObject.day)];
+  else if (monthsDiff(endDateObject, startDateObject) <= 12 && dayDiff(endDateObject, startDateObject) < 0)
+    return [buildFriendlyResult(startDateObject.year, startDateObject.month, startDateObject.day),
+            buildFriendlyResult("", endDateObject.month, endDateObject.day)];           
+  else if (monthsDiff(endDateObject, startDateObject) < 12)
+    return [buildFriendlyResult(startDateObject.year, startDateObject.month, startDateObject.day),
+            buildFriendlyResult("", endDateObject.month, endDateObject.day)];
 
-  if(CURRENT_YEAR === startDateObject.year && endDateObject.year - 1 <= startDateObject.year) {
-    startDateObject.year = "";
-    endDateObject.year = "";
-  }
-  else if (startDateObject.year === endDateObject.year) endDateObject.year = "";
+  return [buildFriendlyResult(startDateObject.year, startDateObject.month, startDateObject.day), 
+          buildFriendlyResult(endDateObject.year, endDateObject.month, endDateObject.day)];
+}
 
-  if (startDateObject.year === endDateObject.year - 1 && startDateObject.month === endDateObject.month) {
-    endDateObject.year = "";
-  }
-  else if (startDateObject.year === endDateObject.year && startDateObject.month === endDateObject.month) endDateObject.month = "";
+function monthsDiff(date, otherDate) {
+  let diff = date.month - otherDate.month
+              + (12 * (date.year - otherDate.year));
+  return diff;
+}
 
-  var startFriendlyDate = buildFriendlyResult(startDateObject.year, startDateObject.month, startDateObject.day);
-  var endFriendlyDate = buildFriendlyResult(endDateObject.year, endDateObject.month, endDateObject.day);
-  
-  return [startFriendlyDate, endFriendlyDate];
+function dayDiff(date, otherDate) {
+  return date.day - otherDate.day;
 }
 
 function isSameDates (date, otherDate) {
@@ -89,9 +98,11 @@ function buildFriendlyResult(year, month, day) {
   return str;
 }
 
-console.log(makeFriendlyDates(['2016-07-01', '2016-07-04']));
 console.log(makeFriendlyDates(["2016-07-01", "2018-07-04"]));
+console.log(makeFriendlyDates(['2016-07-01', '2016-07-04']));
 console.log(makeFriendlyDates(["2016-12-01", "2017-02-03"]));
+console.log(makeFriendlyDates(["2016-12-01", "2018-02-03"]));
 console.log(makeFriendlyDates(["2017-03-01", "2017-05-05"]));
 console.log(makeFriendlyDates(["2018-01-13", "2018-01-13"]));
 console.log(makeFriendlyDates(["2022-09-05", "2023-09-04"]));
+console.log(makeFriendlyDates(["2022-09-05", "2023-09-05"]));
