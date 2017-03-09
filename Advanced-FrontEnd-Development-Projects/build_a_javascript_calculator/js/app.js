@@ -1,3 +1,7 @@
+/*
+    UI should only contain UI functions and operator functions
+*/
+
 $(document).ready(function() {
     appInit();
 });
@@ -5,10 +9,14 @@ $(document).ready(function() {
 function appInit() {
     return function() {
         var c1 = new Calculator();
-        console.log(c1);
+
+        var historyText = "";
+        var resultText = "";
+        var resultCalculated = false;
         var expression = [];
         var operators = [];
         var exp = "";
+        var operatorReset = false;
         
         var operatorFunc = {
             '+': function(a, b) {return c1.add(a,  b);},
@@ -21,6 +29,7 @@ function appInit() {
             var val = e.target.value;
 
             if(val === '=') {
+                if(!isOperand(exp)) return;
                 if (exp) {
                     expression.push(parseInt(exp)); 
                     exp = "";
@@ -31,43 +40,50 @@ function appInit() {
                 }         
 
                 var res = calcPostfixExpression(expression);
+                res = parseFloat(res.toFixed(2));
+                updateCalculatorDisplayWithResult(res);
+                expression.push(res);
                 console.log(res);
             }
             
-            else if (isOperator(val)) {
-               
-                if (exp) {
-                    expression.push(parseInt(exp)); 
-                    exp = "";
-                }
-
-                var topOperator = operators.length > 0 ? operators[operators.length-1] : null;                   
-                if ((topOperator === '+' || topOperator === '-') &&
-                    val === '/' || val === '*') {
-                    operators.push(val);
-                    console.log(operators);
-                }
-                else if (topOperator === null) {
-                    operators.push(val);
-                    console.log(operators);
-                }
-                else {
-                    while (operators.length > 0) {
-                        var op = operators.pop();
-                        expression.push(op);
+            else {
+                if (isOperator(val) && operatorReset) {
+                    updateCalculatorDisplay(val);
+                    operatorReset = false;
+                    if (exp) {
+                        expression.push(parseInt(exp)); 
+                        exp = "";
                     }
 
-                    operators.push(val);
+                    var topOperator = operators.length > 0 ? operators[operators.length-1] : null;                   
+                    if ((topOperator === '+' || topOperator === '-') &&
+                        val === '/' || val === '*') {
+                        operators.push(val);
+                        console.log(operators);
+                    }
+                    else if (topOperator === null) {
+                        operators.push(val);
+                        console.log(operators);
+                    }
+                    else {
+                        while (operators.length > 0) {
+                            var op = operators.pop();
+                            expression.push(op);
+                        }
 
+                        operators.push(val);                   
+                    }
 
-
-                    console.log(operators);
-                    console.log(expression);                    
                 }
-
-            }
-            else if(isOperand(val)) {
-                exp += val;
+                else if(isOperand(val)) {
+                    if(resultCalculated) {
+                        clearHistory();
+                    }
+                    
+                    exp += val;
+                    operatorReset = true;
+                    updateCalculatorDisplay(val);
+                }
             }
             
         });    
@@ -79,7 +95,7 @@ function appInit() {
         }
 
         function isOperand(v) {
-            var re = /^\d+$/;
+            var re = /^-?\d+(\.\d+)?$/;
             return re.test(v);
         }
 
@@ -103,9 +119,27 @@ function appInit() {
             return expstack.pop();
         }
 
+        function updateCalculatorDisplayWithResult(res) {
+            historyText = historyText + '=' + res;
+            resultText = res;
+            $('.answer').text(resultText); 
+            $('.history').text(historyText);
+            historyText = res;
+            resultCalculated = true;
+        }
 
+        function updateCalculatorDisplay(val) {
+            historyText += val;
+            $('.answer').text(val);
+            $('.history').text(historyText);
+            resultCalculated = false;
+        }
+
+        function clearHistory() {
+            historyText = "";
+            $('.history').text(historyText);
+        }
       
     }();
 }
-   
 
