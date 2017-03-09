@@ -16,4 +16,6 @@ function PostfixManager() {
         //if (isOperand...)
         //if (isOperator...)
     }
+
+    // postfix should recieve callback to change UI and not handling it by itself
 }
