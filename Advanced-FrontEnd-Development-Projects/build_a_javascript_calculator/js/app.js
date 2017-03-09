@@ -29,6 +29,7 @@ function appInit() {
             var val = e.target.value;
 
             if(val === '=') {
+                // postfix_manager calculateresult(updateCalculatorDisplayWithResult)
                 if(!isOperand(exp)) return;
                 if (exp) {
                     expression.push(parseInt(exp)); 
@@ -47,6 +48,7 @@ function appInit() {
             }
             
             else {
+                // postfix_manager build_operator(updateCalculatorDisplay)
                 if (isOperator(val) && operatorReset) {
                     updateCalculatorDisplay(val);
                     operatorReset = false;
@@ -76,6 +78,8 @@ function appInit() {
 
                 }
                 else if(isOperand(val)) {
+                    // postfix_manager build_operand(updateCalculatorDisplay)
+                    // think about clearing the history. // make it coherent
                     if(resultCalculated) {
                         clearHistory();
                     }
