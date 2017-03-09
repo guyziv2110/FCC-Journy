@@ -53,7 +53,7 @@ function appInit() {
                     updateCalculatorDisplay(val);
                     operatorReset = false;
                     if (exp) {
-                        expression.push(parseInt(exp)); 
+                        expression.push(parseFloat(exp)); 
                         exp = "";
                     }
 
@@ -99,7 +99,7 @@ function appInit() {
         }
 
         function isOperand(v) {
-            var re = /^-?\d+(\.\d+)?$/;
+            var re = /^(\.)?(-\d+)?\d*(\.\d+)?$/;
             return re.test(v);
         }
 
