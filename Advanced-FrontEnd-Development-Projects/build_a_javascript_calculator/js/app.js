@@ -1,5 +1,6 @@
 /*
     UI should only contain UI functions and operator functions
+    HTML Builder
 */
 
 $(document).ready(function() {
