@@ -14,7 +14,27 @@ function appInit() {
         var historyText = "";
         var resultText = "";
         var operatorReset = false;
-        var ps = PostfixManager();
+        var readDecimal = false;
+        var firstRead = true;
+        var readDot = false;                 
+        var numOfDigits = 0;
+        var maxDigits = 20;
+        var ps = PostfixManager();        
+
+        var init = function() {
+            resultCalculated = false;
+            historyText = "";
+            resultText = "";
+            operatorReset = false;
+            readDecimal = false;
+            firstRead = true;
+            readDot = false; 
+            initHistory();
+            initResult(); 
+            ps.clearAll();        
+        }
+        init();
+        
         var operatorFunc = {
             '+': function(a, b) {return c1.add(a,  b);},
             '-': function(a, b) {return c1.subtract(a, b);},
@@ -25,10 +45,17 @@ function appInit() {
         $('button').click(function(e) {
             var val = e.target.value;
 
+            if(val === 'c') {
+                init();
+                //initHistory();
+            }
+
             if(val === '=') {
                 // postfix_manager calculateresult(updateCalculatorDisplayWithResult)
                 var res = ps.postfixBuildResult(val);
-                if(res) {
+                if(res !== false) {
+                    readDecimal = false;
+                    firstRead = true;
                     res = parseFloat(res.toFixed(2));
                     updateCalculatorDisplayWithResult(res);
                     console.log(res);
@@ -38,6 +65,8 @@ function appInit() {
             else {
                 // postfix_manager build_operator(updateCalculatorDisplay)
                 if (isOperator(val) && operatorReset) {
+                    readDecimal = false;
+                    firstRead = true;
                     updateCalculatorDisplay(val);
                     operatorReset = false;
                     ps.postfixBuildOperator(val);
@@ -45,13 +74,29 @@ function appInit() {
                 else if(isOperand(val)) {
                     // postfix_manager build_operand(updateCalculatorDisplay)
                     // think about clearing the history. // make it coherent
+                    if(maxDigitsExceeded()) {
+                        init();
+                    }
+                    if(val === '.' && readDecimal) return;
+                    if(val === '0' && firstRead) return;
+
+                    firstRead = false;
+
                     if(resultCalculated) {
                         clearHistory();
-                    }
+                        operatorReset = false;
                     
-                    ps.postfixBuildOperand(val);
+                    }
 
+                    if (val === '.') {
+                        readDecimal = true;
+                        operatorReset = false;
+                        readDot = true;
+                    }
+
+                    ps.postfixBuildOperand(val);
                     operatorReset = true;
+                    
                     updateCalculatorDisplay(val);
                 }
             }
@@ -69,25 +114,49 @@ function appInit() {
             return re.test(v);
         }
 
+        function maxDigitsExceeded() {
+            return $('.answer').text() === "Max digits";
+        }
+
         function updateCalculatorDisplayWithResult(res) {
             historyText = historyText + '=' + res;
             resultText = res;
-            $('.answer').text(resultText); 
-            $('.history').text(historyText);
-            historyText = res;
-            resultCalculated = true;
+            if(historyText.length > maxDigits) {
+                $('.answer').text("Max digits");
+                $('.history').text("");
+            }
+            else {            
+                $('.answer').text(resultText); 
+                $('.history').text(historyText);
+                historyText = res;
+                resultCalculated = true;
+            }
         }
 
         function updateCalculatorDisplay(val) {
-            historyText += val;
-            $('.answer').text(val);
-            $('.history').text(historyText);
-            resultCalculated = false;
+            historyText += val.toString();
+            if(historyText.length > maxDigits) {
+                $('.answer').text("Max digits");
+                $('.history').text("");
+            }
+            else {
+                $('.answer').text(val);
+                $('.history').text(historyText);
+                resultCalculated = false;
+            }
         }
 
         function clearHistory() {
             historyText = "";
             $('.history').text(historyText);
+        }
+
+        function initResult() {
+            $('.answer').text('0');
+        }
+
+        function initHistory() {
+            $('.history').text('0');
         }
       
     }();

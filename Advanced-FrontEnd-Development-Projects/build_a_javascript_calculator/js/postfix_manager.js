@@ -47,7 +47,7 @@ function PostfixManager() {
     postfixBuildResult = function(v) {
         if(!isOperand(exp)) return false;
         if (exp) {
-            expression.push(parseInt(exp)); 
+            expression.push(parseFloat(exp)); 
             exp = "";
         }
 
@@ -87,6 +87,12 @@ function PostfixManager() {
         return expstack.pop();
     }
 
+    clearAll = function() {
+        expression = [];
+        operators = [];
+        exp = "";
+    }
+
     function isOperator(v) {
         if (v === '-' || v === '+' || v === '*' || v === '/')
             return true;
@@ -101,7 +107,8 @@ function PostfixManager() {
     return {
         postfixBuildResult: postfixBuildResult,
         postfixBuildOperand: postfixBuildOperand,
-        postfixBuildOperator: postfixBuildOperator
+        postfixBuildOperator: postfixBuildOperator,
+        clearAll: clearAll
     }
     // postfix should recieve callback to change UI and not handling it by itself
 }
