@@ -33,15 +33,9 @@ function appInit() {
             initResult(); 
             ps.clearAll();        
         }
+
         init();
         
-        var operatorFunc = {
-            '+': function(a, b) {return c1.add(a,  b);},
-            '-': function(a, b) {return c1.subtract(a, b);},
-            '*': function(a, b) {return c1.mul(a, b);},
-            '/': function(a, b) {return c1.div(a, b);}
-        };
-
         $('button').click(function(e) {
             var val = e.target.value;
 
@@ -77,8 +71,9 @@ function appInit() {
                     if(maxDigitsExceeded()) {
                         init();
                     }
-                    if(val === '.' && readDecimal) return;
-                    if(val === '0' && firstRead) return;
+
+                    if(isDot(val) && readDecimal) return;
+                    if(isZero(val) && firstRead) return;
 
                     firstRead = false;
 
@@ -102,17 +97,6 @@ function appInit() {
             }
             
         });    
-
-        function isOperator(v) {
-            if (v === '-' || v === '+' || v === '*' || v === '/')
-                return true;
-            return false;
-        }
-
-        function isOperand(v) {
-            var re = /^(\.)?(-\d+)?\d*(\.\d+)?$/;
-            return re.test(v);
-        }
 
         function maxDigitsExceeded() {
             return $('.answer').text() === "Max digits";

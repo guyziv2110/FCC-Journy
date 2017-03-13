@@ -1,18 +1,11 @@
 function PostfixManager() {
     var c1 = new Calculator();
-    
     var expression = [];
     var operators = [];
     var exp = "";
     // should be sent as paramter to calcPostfix instead of being declared here
     // postfix manager should not know how to calculate.
     // it should be generic outside this function.
-    var operatorFunc = {
-        '+': function(a, b) {return c1.add(a,  b);},
-        '-': function(a, b) {return c1.subtract(a, b);},
-        '*': function(a, b) {return c1.mul(a, b);},
-        '/': function(a, b) {return c1.div(a, b);}
-    };
         
     postfixBuildOperator = function(val) {
         if (exp) {
@@ -79,7 +72,7 @@ function PostfixManager() {
             else {
                 b = expstack.pop()
                 a = expstack.pop();
-                c = operatorFunc[k](a, b);
+                c = operatorFunc[k](c1, a, b);
                 expstack.push(c);
             }
         }
@@ -92,17 +85,6 @@ function PostfixManager() {
         operators = [];
         exp = "";
     }
-
-    function isOperator(v) {
-        if (v === '-' || v === '+' || v === '*' || v === '/')
-            return true;
-        return false;
-    }
-
-    function isOperand(v) {
-        var re = /^(\.)?(-\d+)?\d*(\.\d+)?$/;
-        return re.test(v);
-    } 
 
     return {
         postfixBuildResult: postfixBuildResult,
