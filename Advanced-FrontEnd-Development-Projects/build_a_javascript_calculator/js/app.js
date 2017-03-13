@@ -15,8 +15,7 @@ function appInit() {
         var resultText = "";
         var operatorReset = false;
         var readDecimal = false;
-        var firstRead = true;
-        var readDot = false;                 
+        var firstRead = true;              
         var numOfDigits = 0;
         var maxDigits = 20;
         var ps = PostfixManager();        
@@ -28,7 +27,6 @@ function appInit() {
             operatorReset = false;
             readDecimal = false;
             firstRead = true;
-            readDot = false; 
             initHistory();
             initResult(); 
             ps.clearAll();        
@@ -72,31 +70,33 @@ function appInit() {
                         init();
                     }
 
-                    if(isDot(val) && readDecimal) return;
-                    if(isZero(val) && firstRead) return;
-
-                    firstRead = false;
+                    if (!validateOperandInsertion(val)) return;
+                    if (isDot(val)) {
+                        readDecimal = true;
+                        operatorReset = false;
+                    }
 
                     if(resultCalculated) {
                         clearHistory();
                         operatorReset = false;
                     
-                    }
+                    }          
 
-                    if (val === '.') {
-                        readDecimal = true;
-                        operatorReset = false;
-                        readDot = true;
-                    }
-
-                    ps.postfixBuildOperand(val);
+                    firstRead = false;
                     operatorReset = true;
-                    
+                    ps.postfixBuildOperand(val);                    
                     updateCalculatorDisplay(val);
                 }
             }
             
         });    
+
+        function validateOperandInsertion(val) {
+            if(isDot(val) && readDecimal) return false;
+            if(isZero(val) && firstRead) return false;
+
+            return true;
+        }
 
         function maxDigitsExceeded() {
             return $('.answer').text() === "Max digits";
