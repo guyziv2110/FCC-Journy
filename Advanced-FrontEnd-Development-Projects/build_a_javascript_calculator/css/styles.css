@@ -87,3 +87,24 @@ button:visited {
     border: 0px;
     background-color: #FF6638;
 }
+
+.next-calc {
+  right: 50px;
+  top: 250px;
+  width: 0; 
+  height: 0; 
+  position:absolute;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-left: 60px solid #fff;
+  cursor: pointer;
+}
+
+.next-calc:hover {
+  border-left-color:#efeede;
+}
+
+.calc-name {
+    text-align: center;
+    color: #fff;
+}
