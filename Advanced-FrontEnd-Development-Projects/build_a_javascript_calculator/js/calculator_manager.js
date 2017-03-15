@@ -1,4 +1,4 @@
-function calculatorManager(calcClass) {
+function CalculatorManager(calcClass) {
     var calcClass = '.' + calcClass;
     var resultCalculated = false;
     var historyText = "";

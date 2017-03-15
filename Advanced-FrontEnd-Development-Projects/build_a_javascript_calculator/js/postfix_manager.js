@@ -7,7 +7,7 @@ function PostfixManager() {
     // postfix manager should not know how to calculate.
     // it should be generic outside this function.
         
-    postfixBuildOperator = function(val) {
+    var postfixBuildOperator = function(val) {
         if (exp) {
             expression.push(parseFloat(exp)); 
             exp = "";
@@ -33,11 +33,11 @@ function PostfixManager() {
         }
     }
 
-    postfixBuildOperand = function(v) {
+    var postfixBuildOperand = function(v) {
         exp += v;
     }
 
-    postfixBuildResult = function(v) {
+    var postfixBuildResult = function(v) {
         if(!isOperand(exp)) return false;
         if (exp) {
             expression.push(parseFloat(exp)); 
@@ -56,11 +56,11 @@ function PostfixManager() {
         return res;
     }
 
-    canBuildResult = function() {
+    var canBuildResult = function() {
         return (expression.length > operators.length);
     }
 
-    calcPostfixExpression = function(exp) {
+    var calcPostfixExpression = function(exp) {
         var k;
         var a, b, c;
         var expstack = [];
@@ -80,7 +80,7 @@ function PostfixManager() {
         return expstack.pop();
     }
 
-    clearAll = function() {
+    var clearAll = function() {
         expression = [];
         operators = [];
         exp = "";

@@ -1,5 +1,5 @@
 function calculatorLayoutHelper() {
-    buildCalculatorLayout = function(calculatorName) {
+    var buildCalculatorLayout = function(calculatorName) {
         var calcHtml = String.format("\
             <div class='{0} calculator text-right'> \
                 <div class='calc-name'>Calculator {0}</div> \
