@@ -15,14 +15,16 @@ $(document).ready(function() {
         cm.registerButtonClick();            
         $(this).hide();
     });
-    
+
+    var calcNavigator = calculatorNavigator($('.calculators>div').length, 0);
+    $('#next-calc').click(showNextCalc.bind(this, calcNavigator));  
+
     appInit();
 });
 
 // move to calc navigator as the num of calcs will be served to the function once
-function showNextCalc() {
-  // CalculatorNavigator.showNext();
-  // CalculatorNavigator.showPrev();
+function showNextCalc(calcNavigator) {
+  calcNavigator.showNext();
 }
 
 if (!String.format) {
@@ -41,9 +43,7 @@ function appInit() {
     return function() {
 
       $('.calculators div:first').show();
-      $('#next-calc').click(showNextCalc);        
-       
-      
+            
     }();
 }
 
