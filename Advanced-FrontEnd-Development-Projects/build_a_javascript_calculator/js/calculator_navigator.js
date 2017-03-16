@@ -1,22 +1,26 @@
-function calculatorNavigator(items, currentItem) {
+function calculatorNavigator(itemsLength, currentItemIndex) {
     var showNext = function() {
-        if(currentItem < items - 1) {
-            console.log('next');
-            currentItem++;
-
-            //show prev icon
-            // handle show next calc (might use callback) where the currentItem
-            // will be injected as param
-        }
-        else {
-            // hide next icon
+        if(currentItemIndex < itemsLength - 1) {
+            $('.calculators').children().eq(currentItemIndex).hide();
+            currentItemIndex++;
+            $('.prev-calc').fadeIn(400);
+            if(currentItemIndex === itemsLength - 1)
+                $('.next-calc').fadeOut(400);
+            $('.calculators').children().eq(currentItemIndex).show();
+            $('.calculators').children().eq(currentItemIndex).find('button').focus();
         }
     }
 
 
     var showPrev = function() {
-        if (currentItem > 0) {
-            currentItem--;
+        if (currentItemIndex > 0) {
+            $('.calculators').children().eq(currentItemIndex).hide();
+            currentItemIndex--;
+            $('.next-calc').fadeIn(400);
+            if(currentItemIndex === 0)
+                $('.prev-calc').fadeOut(400);
+            $('.calculators').children().eq(currentItemIndex).show();
+            $('.calculators').children().eq(currentItemIndex).find('button').focus();
         }
     }
 

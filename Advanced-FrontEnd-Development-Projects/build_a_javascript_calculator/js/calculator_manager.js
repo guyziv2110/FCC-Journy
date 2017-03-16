@@ -11,6 +11,12 @@ function CalculatorManager(calcClass) {
     var ps = PostfixManager();        
 
     this.init = function() {
+        registerKeyPress();
+        registerButtonClick();        
+        pInit();
+    }     
+
+    var pInit = function() {
         resultCalculated = false;
         historyText = "";
         resultText = "";
@@ -19,69 +25,83 @@ function CalculatorManager(calcClass) {
         firstRead = true;
         initHistory();
         initResult(); 
-        ps.clearAll();        
-    }     
+        ps.clearAll();  
+    }
     
-    this.registerButtonClick = function() {
-        console.log(this);
-        var initref = this.init;
+    var registerKeyPress = function() {
+        $(calcClass + ' button').keypress(function(event){
+
+            if(!isNaN(String.fromCharCode(event.which))){
+                event.preventDefault(); //stop character from entering input
+                handleInput(event.key);
+
+            }
+
+
+        });
+    }
+
+    var registerButtonClick = function() {        
         $(calcClass + ' button').click(function(e) {
             var val = e.target.value;
-
-            if(val === 'c') {
-                initref();
-                //initHistory();
-            }
-
-            if(val === '=') {
-                // postfix_manager calculateresult(updateCalculatorDisplayWithResult)
-                var res = ps.postfixBuildResult(val);
-                if(res !== false) {
-                    readDecimal = false;
-                    firstRead = true;
-                    res = parseFloat(res.toFixed(2));
-                    updateCalculatorDisplayWithResult(res);
-                    console.log(res);
-                }
-            }
-            
-            else {
-                // postfix_manager build_operator(updateCalculatorDisplay)
-                if (isOperator(val) && operatorReset) {
-                    readDecimal = false;
-                    firstRead = true;
-                    updateCalculatorDisplay(val);
-                    operatorReset = false;
-                    ps.postfixBuildOperator(val);
-                }
-                else if(isOperand(val)) {
-                    // postfix_manager build_operand(updateCalculatorDisplay)
-                    // think about clearing the history. // make it coherent
-                    if(maxDigitsExceeded()) {
-                        init();
-                    }
-
-                    if (!validateOperandInsertion(val)) return;
-                    if (isDot(val)) {
-                        readDecimal = true;
-                        operatorReset = false;
-                    }
-
-                    if(resultCalculated) {
-                        historyText = "";
-                        clearHistory();
-                        operatorReset = false;
-                    
-                    }          
-
-                    firstRead = false;
-                    operatorReset = true;
-                    ps.postfixBuildOperand(val);                    
-                    updateCalculatorDisplay(val);
-                }
-            }
-            
+            handleInput(val);            
         });          
+    }
+
+    var handleInput = function(val) {
+        var initref = pInit;
+        if(val === 'c') {
+            initref();
+            //initHistory();
+        }
+
+        if(val === '=') {
+            // postfix_manager calculateresult(updateCalculatorDisplayWithResult)
+            var res = ps.postfixBuildResult(val);
+            if(res !== false) {
+                readDecimal = false;
+                firstRead = true;
+                res = parseFloat(res.toFixed(2));
+                updateCalculatorDisplayWithResult(res);
+                console.log(res);
+            }
+        }
+        
+        else {
+            // postfix_manager build_operator(updateCalculatorDisplay)
+            if (isOperator(val) && operatorReset) {
+                readDecimal = false;
+                firstRead = true;
+                updateCalculatorDisplay(val);
+                operatorReset = false;
+                ps.postfixBuildOperator(val);
+            }
+            else if(isOperand(val)) {
+                // postfix_manager build_operand(updateCalculatorDisplay)
+                // think about clearing the history. // make it coherent
+                if(maxDigitsExceeded()) {
+                    initref();
+                }
+
+                if (!validateOperandInsertion(val)) return;
+                if (isDot(val)) {
+                    readDecimal = true;
+                    operatorReset = false;
+                }
+
+                if(resultCalculated) {
+                    historyText = "";
+                    clearHistory();
+                    operatorReset = false;
+                
+                }          
+
+                firstRead = false;
+                operatorReset = true;
+                ps.postfixBuildOperand(val);                    
+                updateCalculatorDisplay(val);
+            }
+        }        
     }
 
     var validateOperandInsertion = function (val) {

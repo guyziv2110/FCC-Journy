@@ -108,3 +108,20 @@ button:visited {
     text-align: center;
     color: #fff;
 }
+
+.prev-calc {
+  left: 50px;
+  top: 250px;
+  width: 0; 
+  height: 0; 
+  position:absolute;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-right: 60px solid #fff;
+  cursor: pointer;
+  display: none;    
+}
+
+.prev-calc:hover {
+  border-right-color:#efeede;
+}
