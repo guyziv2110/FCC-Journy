@@ -26,7 +26,9 @@ function appInit() {
       $('.calculators div:first').show();
       $('.calculators div:first button').focus();
       $('#next-calc').click(showNextCalc.bind(this, calcNavigator));  
-      $('#prev-calc').click(showPrevCalc.bind(this, calcNavigator));        
+      $('#prev-calc').click(showPrevCalc.bind(this, calcNavigator)); 
+      if($('.calculators>div').length > 1)  
+        $('.next-calc').show();
     }();
 }
 

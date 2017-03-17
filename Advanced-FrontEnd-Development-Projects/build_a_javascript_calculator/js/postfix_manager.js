@@ -1,11 +1,7 @@
-function PostfixManager() {
-    var c1 = new Calculator();
+function postfixManager(calculator) {
     var expression = [];
     var operators = [];
     var exp = "";
-    // should be sent as paramter to calcPostfix instead of being declared here
-    // postfix manager should not know how to calculate.
-    // it should be generic outside this function.
         
     var postfixBuildOperator = function(val) {
         if (exp) {
@@ -17,11 +13,9 @@ function PostfixManager() {
         if ((topOperator === '+' || topOperator === '-') &&
             val === '/' || val === '*') {
             operators.push(val);
-            console.log(operators);
         }
         else if (topOperator === null) {
             operators.push(val);
-            console.log(operators);
         }
         else {
             while (operators.length > 0) {
@@ -39,6 +33,7 @@ function PostfixManager() {
 
     var postfixBuildResult = function(v) {
         if(!isOperand(exp)) return false;
+
         if (exp) {
             expression.push(parseFloat(exp)); 
             exp = "";
@@ -57,9 +52,11 @@ function PostfixManager() {
     }
 
     var canBuildResult = function() {
-        return (expression.length > operators.length);
+        var expressionNumberCount = countNumbers(expression);
+        var expressionOperatorsCount = expression.length - countNumbers(expression);
+        return (expressionNumberCount > expressionOperatorsCount + operators.length);
     }
-
+    
     var calcPostfixExpression = function(exp) {
         var k;
         var a, b, c;
@@ -72,7 +69,7 @@ function PostfixManager() {
             else {
                 b = expstack.pop()
                 a = expstack.pop();
-                c = operatorFunc[k](c1, a, b);
+                c = operatorFunc[k](calculator, a, b);
                 expstack.push(c);
             }
         }
@@ -92,5 +89,4 @@ function PostfixManager() {
         postfixBuildOperator: postfixBuildOperator,
         clearAll: clearAll
     }
-    // postfix should recieve callback to change UI and not handling it by itself
 }

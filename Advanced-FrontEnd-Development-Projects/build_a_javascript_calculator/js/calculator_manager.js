@@ -6,9 +6,11 @@ function CalculatorManager(calcClass) {
     var operatorReset = false;
     var readDecimal = false;
     var firstRead = true;              
-    var numOfDigits = 0;
     var maxDigits = 20;
-    var ps = PostfixManager();        
+    var calculator = new Calculator();
+    var operandReset = true;
+    var MAX_DIGITS_ERROR = "Max digits";
+    var ps = postfixManager(calculator);        
 
     this.init = function() {
         registerKeyPress();
@@ -21,8 +23,9 @@ function CalculatorManager(calcClass) {
         historyText = "";
         resultText = "";
         operatorReset = false;
+        operandReset = true;
         readDecimal = false;
-        firstRead = true;
+        firstRead = true;   
         initHistory();
         initResult(); 
         ps.clearAll();  
@@ -30,14 +33,20 @@ function CalculatorManager(calcClass) {
     
     var registerKeyPress = function() {
         $(calcClass + ' button').keypress(function(event){
-
             if(!isNaN(String.fromCharCode(event.which))){
-                event.preventDefault(); //stop character from entering input
+                event.preventDefault();
                 handleInput(event.key);
-
             }
 
+            if(event.key === '-' || event.key === '+' || event.key === '*' || event.key === '/'){
+                event.preventDefault();
+                handleInput(event.key);
+            }
 
+            if(event.which === 13){
+                event.preventDefault();
+                handleInput("=");
+            }                           
         });
     }
 
@@ -52,38 +61,39 @@ function CalculatorManager(calcClass) {
         var initref = pInit;
         if(val === 'c') {
             initref();
-            //initHistory();
         }
 
         if(val === '=') {
-            // postfix_manager calculateresult(updateCalculatorDisplayWithResult)
             var res = ps.postfixBuildResult(val);
             if(res !== false) {
                 readDecimal = false;
+                operandReset = true;
                 firstRead = true;
                 res = parseFloat(res.toFixed(2));
                 updateCalculatorDisplayWithResult(res);
-                console.log(res);
             }
         }
         
         else {
-            // postfix_manager build_operator(updateCalculatorDisplay)
             if (isOperator(val) && operatorReset) {
                 readDecimal = false;
+                operandReset = true;
                 firstRead = true;
                 updateCalculatorDisplay(val);
                 operatorReset = false;
                 ps.postfixBuildOperator(val);
             }
-            else if(isOperand(val)) {
-                // postfix_manager build_operand(updateCalculatorDisplay)
-                // think about clearing the history. // make it coherent
+            else if(isOperand(val) && operandReset) {
                 if(maxDigitsExceeded()) {
                     initref();
                 }
 
+                if(isZero(val) && firstRead) {
+                    operandReset = false;
+                }
+
                 if (!validateOperandInsertion(val)) return;
+
                 if (isDot(val)) {
                     readDecimal = true;
                     operatorReset = false;
@@ -93,7 +103,6 @@ function CalculatorManager(calcClass) {
                     historyText = "";
                     clearHistory();
                     operatorReset = false;
-                
                 }          
 
                 firstRead = false;
@@ -106,20 +115,18 @@ function CalculatorManager(calcClass) {
 
     var validateOperandInsertion = function (val) {
         if(isDot(val) && readDecimal) return false;
-        if(isZero(val) && firstRead) return false;
-
         return true;
     }
 
     var maxDigitsExceeded = function() {
-        return $(calcClass + ' .answer').text() === "Max digits";
+        return $(calcClass + ' .answer').text() === MAX_DIGITS_ERROR;
     }
 
     var updateCalculatorDisplayWithResult = function(res) {
         historyText = historyText + '=' + res;
         resultText = res;
         if(historyText.length > maxDigits) {
-            $(calcClass + ' .answer').text("Max digits");
+            $(calcClass + ' .answer').text(MAX_DIGITS_ERROR);
             $(calcClass + ' .history').text("");
         }
         else {            
@@ -131,10 +138,9 @@ function CalculatorManager(calcClass) {
     }
 
     var updateCalculatorDisplay = function(val) {
-        console.log(calcClass);
         historyText += val.toString();
         if(historyText.length > maxDigits) {
-            $(calcClass + ' .answer').text("Max digits");
+            $(calcClass + ' .answer').text(MAX_DIGITS_ERROR);
             $(calcClass + ' .history').text("");
         }
         else {
@@ -156,9 +162,4 @@ function CalculatorManager(calcClass) {
     var initHistory = function() {
         $(calcClass + ' .history').text('0');
     }     
-
-    // return {
-    //     registerButtonClick: registerButtonClick,
-    //     init: init
-    // }
 }

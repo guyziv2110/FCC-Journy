@@ -23,3 +23,13 @@ function isDot(v) {
 function isZero(v) {
     return v === '0';
 }
+
+var countNumbers = function(expression) {
+    var count = 0;
+    for (var i = 0; i < expression.length; i++) {
+        if(!isNaN(expression[i]))
+            count++;
+    }
+
+    return count;
+}

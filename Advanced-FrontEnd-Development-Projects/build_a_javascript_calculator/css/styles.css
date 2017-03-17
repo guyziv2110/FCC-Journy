@@ -29,6 +29,7 @@ html, body {
 }
 
 .buttons {
+  font-family: 'Orbitron', sans-serif;
   font-size: 18px;
   font-weight: bold;
   color: #fff;
@@ -37,12 +38,14 @@ html, body {
 }
 
 button {
+  font-family: 'Orbitron', sans-serif;
   height: 45px;
   width: 52px;    
   border-radius: 10px;
   border: none;
   background-color: #4d4d4d;
   margin: 6px 5px 6px 5px;
+  color: #fff;
 }
 
 button:active {
@@ -98,6 +101,7 @@ button:visited {
   border-bottom: 60px solid transparent;
   border-left: 60px solid #fff;
   cursor: pointer;
+  display: none;    
 }
 
 .next-calc:hover {
