@@ -10,7 +10,7 @@
       window.timer = window.setInterval(function () {
           circle.setAttribute("stroke", "#FF8D82");
           circle.setAttribute("stroke-dasharray", angle + ", 200000");
-          //myTimer.innerHTML = parseInt(angle/360*100) + '%';
+
 
           if (angle >= full_angle) {
               window.clearInterval(window.timer);
