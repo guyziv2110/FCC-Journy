@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Abel');
+
+.container {
+    text-align: center;
+    margin-top:10%;
+    
+}
+
+.pomodoro_container {
+    width: 300px;
+    height: 300px; 
+    top: 0px; 
+    left: 0px;
+}
+
+.pomodoro_timer_per {
+    font-size: 65px;
+    fill: #FF8D82;
+    font-family: 'Abel';
+    font-weight: 100;
+    stroke-width: 0;
+}
+ 
