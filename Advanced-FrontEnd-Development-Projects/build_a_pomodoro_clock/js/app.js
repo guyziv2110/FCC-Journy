@@ -1,11 +1,12 @@
   var pomodoroControlReference = pomodoroControl;
   var pomodoroTypeEnum = pomodoroType();
+  var pomodoroManagerReference = pomodoroManager();
 
-  (function (pomodoroControlRef, pomodoroTypeEnum) {
+  (function (pomodoroManagerRef, pomodoroControlRef, pomodoroTypeEnum) {
         $(document).ready(function() {
             $('.pomodoro_controls div').each(function() {
                 var pomodoroClass = $(this).attr('class');
-                var pomodoroControl = pomodoroControlRef(pomodoroClass);
+                var pomodoroControl = pomodoroControlRef(pomodoroManagerRef, pomodoroClass);
                 $(this).replaceWith(pomodoroControl.create());
                 //send as param to setControlEvents the appropriate controlmanager function to run
                 pomodoroControl.setControlEvents();
@@ -31,6 +32,6 @@
             }
             angle += angle_increment;
         }.bind(this), interval);
-})(pomodoroControlReference, pomodoroTypeEnum);
+})(pomodoroManagerReference, pomodoroControlReference, pomodoroTypeEnum);
 
 // add pomodoro manager to organize stop timer, start timer and etc...

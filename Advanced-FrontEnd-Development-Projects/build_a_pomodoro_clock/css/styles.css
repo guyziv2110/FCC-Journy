@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 .container {
     text-align: center;
@@ -7,10 +8,21 @@
 }
 
 .pomodoro_container {
-    width: 300px;
+    width: 350px;
     height: 300px; 
     top: 0px; 
     left: 0px;
+}
+
+.pomodoro_controls {
+    width: 550px;
+    margin: 50px auto 0px auto;
+
+}
+
+.pomodoro_control {
+    width: 250px;
+    display: inline-block;
 }
 
 .pomodoro_timer_per {
@@ -21,3 +33,44 @@
     stroke-width: 0;
 }
  
+.pomodoro-control-inputs input {
+    background-color: #FF8D82;
+    width: 120px;
+    outline: none;
+    border: none;
+    border-radius: 9px;
+    text-align: center;
+    font-weight: 400;
+    color: #fff;
+    vertical-align: middle;
+    font-size:18px;
+}
+
+.pomodoro_header {
+    font-family: 'Abel';
+    width: 200px;
+    color: #DE8D82;
+    font-weight: 800;
+    font-size:25px;
+}
+
+.pomodoro-control-inputs  {
+    width: 200px;
+    font-size: 25px;
+    outline: none;
+    font-family: Open Sans, Arial;
+    background-color: #FF8D82;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+ }
+
+ .pomodoro_plus {
+     border-left: solid 2px white;
+     padding: 5px 10px;     
+ }
+
+ .pomodoro_minus {
+    border-right: solid 2px white;
+    padding: 5px 10px;     
+ }
