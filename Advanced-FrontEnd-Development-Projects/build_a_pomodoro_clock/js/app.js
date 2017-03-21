@@ -1,15 +1,17 @@
-  var pomodoroControlReference = pomodoroControl;
   var pomodoroTypeEnum = pomodoroType();
   var pomodoroManagerReference = pomodoroManager();
 
-  (function (pomodoroManagerRef, pomodoroControlRef, pomodoroTypeEnum) {
+  (function (pomodoroManagerRef, pomodoroTypeEnum) {
         $(document).ready(function() {
             $('.pomodoro_controls div').each(function() {
                 var pomodoroClass = $(this).attr('class');
-                var pomodoroControl = pomodoroControlRef(pomodoroManagerRef, pomodoroClass);
-                $(this).replaceWith(pomodoroControl.create());
-                //send as param to setControlEvents the appropriate controlmanager function to run
-                pomodoroControl.setControlEvents();
+                var pomodoroCtrlBase = pomodoroControlFactory().build(pomodoroClass);
+                if(pomodoroCtrlBase !== undefined) {
+                    var pomodoroCtrl = new pomodoroCtrlBase(pomodoroManagerRef, pomodoroClass);
+                    $(this).replaceWith(pomodoroCtrl.create());
+                    //send as param to setControlEvents the appropriate controlmanager function to run
+                    pomodoroCtrl.setControlEvents();
+                }
             });
         });
 
@@ -32,6 +34,6 @@
             }
             angle += angle_increment;
         }.bind(this), interval);
-})(pomodoroManagerReference, pomodoroControlReference, pomodoroTypeEnum);
+})(pomodoroManagerReference, pomodoroTypeEnum);
 
 // add pomodoro manager to organize stop timer, start timer and etc...

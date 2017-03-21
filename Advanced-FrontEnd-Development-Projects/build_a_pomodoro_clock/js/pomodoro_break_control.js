@@ -1,15 +1,19 @@
-function pomodoroBreakControl() {
-    var getDefaultControlValue = function() {
-        return 100;
+var PomodoroBreakControl = (function () {
+    function PomodoroBreakControl(pomodoroManager, pomodoroClass) {
+        this.pomodoroClass = pomodoroClass;
+        this.pomodoroClassSelector = "." + pomodoroClass;
+        this.setPomodoroValue = pomodoroManager.setBreak;
+
+        this.getDefaultControlValue = function() {
+            return 5;
+        }
+
+        this.getControlHeader = function() {
+            return 'Break Length';
+        }
     }
 
-    var getControlHeader = function() {
-        return 'Break Length';
-    }
+    PomodoroBreakControl.prototype = PomodoroControl.prototype;
+    return PomodoroBreakControl;    
+}());
 
-    var setControlEvents = function() {
-        $(pomodoroClassSelector + ' input').keypress(function() {
-            pomodoroManager.setBreak();
-        });
-    }    
-}

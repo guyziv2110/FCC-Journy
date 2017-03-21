@@ -67,10 +67,13 @@
 
  .pomodoro_plus {
      border-left: solid 2px white;
-     padding: 5px 10px;     
  }
 
  .pomodoro_minus {
-    border-right: solid 2px white;
-    padding: 5px 10px;     
+    border-right: solid 2px white;    
+ }
+
+ .pomodoro_value_control {
+     padding: 5px 10px;
+     cursor: pointer;
  }
