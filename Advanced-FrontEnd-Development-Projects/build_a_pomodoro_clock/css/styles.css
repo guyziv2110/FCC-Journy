@@ -77,3 +77,10 @@
      padding: 5px 10px;
      cursor: pointer;
  }
+
+ svg text.pomodoro_timer_state {
+   font-family: FontAwesome;
+   font-size:20px;
+   fill: #FF8D82;
+   cursor: pointer;
+ }

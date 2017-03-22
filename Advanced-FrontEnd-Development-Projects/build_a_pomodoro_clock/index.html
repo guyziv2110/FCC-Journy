@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Javascript Pomodoro</title>
-        
+        <link rel="stylesheet" href="css/vendors/font-awesome.min.css">
         <link rel="stylesheet" href="css/styles.css">
     </head>
 
@@ -13,15 +13,19 @@
                         stroke-width="4" transform="rotate(-90,140,140)" />
                 <circle cx="140" cy="140" r="135" id="pomodoro_timer_circle_filler" stroke="#D1D9DF" fill="none"
                         stroke-width="6" transform="rotate(-90,140,140)" />                        
-                <text class="pomodoro_timer_per" text-anchor="middle" x="140" y="140">15:45</text>
+                <text class="pomodoro_timer_per" text-anchor="middle" x="140" y="140">25:00</text>
+                <text class="pomodoro_timer_state" text-anchor="middle" x="140" y="190">&#xf04b</text>
             </svg>            
 
             <!-- only two controls are available - pomodoro_break and pomodoro_session -->
             <div class="pomodoro_controls">
+
+             
                 <div class='pomodoro_break'> </div>
                 <div class='pomodoro_session'> </div>
             </div>
         </div>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script src="js/pomodoro_type.js"></script>
         <script src="js/format_polyfill.js"></script>
