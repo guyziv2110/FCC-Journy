@@ -2,6 +2,10 @@ function pomodoroManager() {
     var pomoTimer;
     var lastAngle = 0;
 
+    var canSet = function() {
+        return pomoTimer === undefined;
+    }
+
     var setSession = function() {
         console.log('setSession called');
     }
@@ -44,6 +48,7 @@ function pomodoroManager() {
         setBreak: setBreak,
         pause: pause,
         isStarted: isStarted,
-        start: start
+        start: start,
+        canSet: canSet
     }
 }

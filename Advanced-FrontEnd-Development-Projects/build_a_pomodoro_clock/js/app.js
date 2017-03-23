@@ -15,13 +15,15 @@
             });
         });
 
-        var pomoManager = pomodoroManager();
-
         $('.pomodoro_timer_state').click(function() {
-            if(pomoManager.isStarted() === undefined)
-                pomoManager.start();
-            else
-                pomoManager.pause();
+            if(pomodoroManagerReference.isStarted() === undefined) {
+                $(this).html('&#xf04c');
+                pomodoroManagerReference.start();
+            }
+            else {
+                $(this).html('&#xf04b');
+                pomodoroManagerReference.pause();
+            }
         });
 
 })(pomodoroManagerReference, pomodoroTypeEnum);

@@ -1,20 +1,25 @@
 var PomodoroControl = (function () {
     function PomodoroControl(pomodoroManager, pomodoroClass) {
+        this.pomodoroManager = pomodoroManager;
     }
 
     PomodoroControl.prototype.setControlEvents = function() {
         var pomodoroControlRef = $(this.pomodoroClassSelector);
         var pomodoroValueSetter = this.setPomodoroValue;
+        var pomodoroManagerRef = this.pomodoroManager;
         $(this.pomodoroClassSelector + ' input').keypress(function() {
+            if(!pomodoroManagerRef.canSet()) return;
             pomodoroValueSetter();
         });
         $('.pomodoro_minus', pomodoroControlRef).click(function() {
+            if(!pomodoroManagerRef.canSet()) return;
             var pomoValue = $('.pomodoro-value', pomodoroControlRef);
             var currentPomoValue = parseInt(pomoValue.val());
             pomoValue.val(currentPomoValue - 1);
             pomodoroValueSetter(pomoValue);
         });                
         $('.pomodoro_plus', pomodoroControlRef).click(function() {
+            if(!pomodoroManagerRef.canSet()) return;
             var pomoValue = $('.pomodoro-value', pomodoroControlRef);
             var currentPomoValue = parseInt(pomoValue.val());
             pomoValue.val(currentPomoValue + 1);
