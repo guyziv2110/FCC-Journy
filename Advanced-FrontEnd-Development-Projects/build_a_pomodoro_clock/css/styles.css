@@ -25,9 +25,15 @@
     display: inline-block;
 }
 
-.pomodoro_timer_per {
-    font-size: 65px;
-    fill: #FF8D82;
+#pomodoro_timer_per {
+    font-size: 55px;
+    font-family: 'Abel';
+    font-weight: 100;
+    stroke-width: 0;
+}
+
+#pomodoro_timer_title {
+    font-size: 60px;
     font-family: 'Abel';
     font-weight: 100;
     stroke-width: 0;
@@ -78,9 +84,18 @@
      cursor: pointer;
  }
 
- svg text.pomodoro_timer_state {
+ svg text#pomodoro_timer_state {
    font-family: FontAwesome;
    font-size:20px;
-   fill: #FF8D82;
    cursor: pointer;
  }
+
+ .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
