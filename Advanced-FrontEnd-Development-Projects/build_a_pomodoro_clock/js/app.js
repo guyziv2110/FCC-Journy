@@ -1,27 +1,28 @@
   (function () {
-        var pomodoroTypeEnum = pomodoroType();
-        var pomodoroManagerReference = pomodoroManager();        
+        var pauseFACode = "&#xf04c";
+        var startFACode = "&#xf04b";
+        // these defaults values can be served via the objects.
+        var pomodoroManagerReference = pomodoroManager(25, 5);        
 
         $(document).ready(function() {
             $('.pomodoro_controls div').each(function() {
                 var pomodoroClass = $(this).attr('class');
-                var pomodoroCtrlBase = pomodoroControlFactory().build(pomodoroClass);
-                if(pomodoroCtrlBase !== undefined) {
-                    var pomodoroCtrl = new pomodoroCtrlBase(pomodoroManagerReference, pomodoroClass);
-                    $(this).replaceWith(pomodoroCtrl.create());
-                    //send as param to setControlEvents the appropriate controlmanager function to run
-                    pomodoroCtrl.setControlEvents();
+                var PomodoroCtrlBase = pomodoroControlFactory().build(pomodoroClass);
+                if(PomodoroCtrlBase !== undefined) {
+                    var PomodoroCtrl = new PomodoroCtrlBase(pomodoroManagerReference, pomodoroClass);
+                    $(this).replaceWith(PomodoroCtrl.create());
+                    PomodoroCtrl.setControlEvents();
                 }
             });
         });
 
         $('#pomodoro_timer_state').click(function() {
-            if(pomodoroManagerReference.isStarted() === undefined) {
-                $(this).html('&#xf04c');
+            if(!pomodoroManagerReference.isStarted()) {
+                $(this).html(pauseFACode);
                 pomodoroManagerReference.start();
             }
             else {
-                $(this).html('&#xf04b');
+                $(this).html(startFACode);
                 pomodoroManagerReference.pause();
             }
         });

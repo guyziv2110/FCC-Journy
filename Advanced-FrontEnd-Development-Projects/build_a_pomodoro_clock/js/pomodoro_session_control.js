@@ -6,7 +6,7 @@ var PomodoroSessionControl = (function () {
         this.setPomodoroValue = pomodoroManager.setSession;
 
         this.getDefaultControlValue = function() {
-            return 0.5;
+            return 25;
         }
 
         this.getControlHeader = function() {

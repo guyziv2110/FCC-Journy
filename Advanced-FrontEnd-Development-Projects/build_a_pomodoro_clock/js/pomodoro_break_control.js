@@ -6,7 +6,7 @@ var PomodoroBreakControl = (function () {
         this.setPomodoroValue = pomodoroManager.setBreak;
 
         this.getDefaultControlValue = function() {
-            return 0.2;
+            return 5;
         }
 
         this.getControlHeader = function() {

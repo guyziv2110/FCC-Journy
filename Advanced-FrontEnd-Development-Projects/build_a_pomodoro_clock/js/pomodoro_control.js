@@ -10,16 +10,16 @@ var PomodoroControl = (function () {
         $('.pomodoro_minus', pomodoroControlRef).click(function() {
             if(!pomodoroManagerRef.canSet()) return;
             var pomoValue = $('.pomodoro-value', pomodoroControlRef);
-            var currentPomoValue = parseFloat(pomoValue.val());
-            var newValue = currentPomoValue - 0.1;
+            var currentPomoValue = parseInt(pomoValue.val());
+            var newValue = currentPomoValue - 1;
             pomoValue.val(newValue);
             pomodoroValueSetter(newValue);
         });                
         $('.pomodoro_plus', pomodoroControlRef).click(function() {
             if(!pomodoroManagerRef.canSet()) return;
             var pomoValue = $('.pomodoro-value', pomodoroControlRef);
-            var currentPomoValue = parseFloat(pomoValue.val());
-            var newValue = currentPomoValue + 0.1;
+            var currentPomoValue = parseInt(pomoValue.val());
+            var newValue = currentPomoValue + 1;
             pomoValue.val(newValue);
             pomodoroValueSetter(newValue);
         });                   

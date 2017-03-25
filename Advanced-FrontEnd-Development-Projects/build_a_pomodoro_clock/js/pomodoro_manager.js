@@ -1,13 +1,13 @@
-function pomodoroManager() {
+function pomodoroManager(sessionTime, breakTime) {
     var pomoTimer;
     var pomoTypes =  pomodoroType();
-    var currTimerType;
-    // these are the session and break times determined by the controls (in seconds).
-    var sessionTime = 0;
-    var breakTime = 0;
+    var currTimerType = pomoTypes.SESSION;
 
     var sessionIncrement;
     var breakIncrement;
+    
+    var sessionSet = false;
+    var breakSet = false;
     
     var lastAngle = 0;
     var overallTime;
@@ -15,19 +15,21 @@ function pomodoroManager() {
     var pomoFiller;
     var pomoText;
 
+    var isFirstInit = true;
     var isPaused = false;
+    var interval = 1000;   
 
     var circle = document.getElementById('pomodoro_timer_circle_filler');
-    var circle_timer = document.getElementById('pomodoro_timer_per');
-    var circle_timer_title = document.getElementById('pomodoro_timer_title');
-    var pomodoro_timer_state = document.getElementById('pomodoro_timer_state');
+    var circleTimer = document.getElementById('pomodoro_timer_per');
+    var circleTimerTitle = document.getElementById('pomodoro_timer_title');
+    var circleTimerState = document.getElementById('pomodoro_timer_state');
 
-    var circle_radius = circle.getAttribute('r');
+    var circleRadius = circle.getAttribute('r');
     // circumference of a circle is : 2PI * R.
-    var full_angle = 2 * Math.PI * circle_radius;    
+    var circleCircumference = 2 * Math.PI * circleRadius;    
 
     var canSet = function() {
-        return pomoTimer === undefined;
+        return pomoTimer === undefined || pomoTimer === null;
     }
 
     var canInit = function(t) {
@@ -36,20 +38,20 @@ function pomodoroManager() {
 
     var setSession = function(v) {
         sessionTime = v * 60;
-        sessionIncrement = full_angle / sessionTime;
+        sessionIncrement = circleCircumference / sessionTime;
         if(canInit(pomoTypes.SESSION)) initTimer(sessionTime, sessionIncrement);
-        console.log('setSession called');
+        sessionSet = true;
     }
 
     var setBreak = function(v) {
         breakTime = v * 60;
-        breakIncrement = full_angle / breakTime;
+        breakIncrement = circleCircumference / breakTime;
         if(canInit(pomoTypes.BREAK)) initTimer(breakTime, breakIncrement);        
-        console.log('setBreak called');
+        breakSet = true;
     }
 
     var initTimer = function(d, s) {
-        circle_timer.innerHTML = pomodoroExactTime(d);
+        circleTimer.innerHTML = pomodoroExactTime(d);
         overallTime = d;
         lastAngle = 0;
         angleAddition = s;
@@ -57,7 +59,7 @@ function pomodoroManager() {
 
     var pause = function() {
          clearInterval(pomoTimer);
-         pomoTimer = undefined;
+         pomoTimer = null;
          isPaused = true;
     }
 
@@ -80,28 +82,21 @@ function pomodoroManager() {
     }
 
     var setNextTimer = function() {
-        if(!isPaused)
-            currTimerType === pomoTypes.SESSION ? startBreak() : startSession();
-        else {
-            isPaused = false;
-            timerHandler();
-        }
+        currTimerType === pomoTypes.SESSION ? startBreak() : startSession();
     }
 
     var timerHandler = function() {
-        var interval = 1000;    
-    
-        circle_timer_title.setAttribute("fill", filler);
-        pomodoro_timer_per.setAttribute("fill", filler);
-        pomodoro_timer_state.setAttribute("fill", filler);
-        circle_timer_title.innerHTML = pomoText;
+        circleTimerTitle.setAttribute("fill", filler);
+        circleTimer.setAttribute("fill", filler);
+        circleTimerState.setAttribute("fill", filler);
+        circleTimerTitle.innerHTML = pomoText;
         
         pomoTimer = window.setInterval(function () {
             circle.setAttribute("stroke", filler);
             circle.setAttribute("stroke-dasharray", lastAngle + ", 200000");
-            circle_timer.innerHTML = pomodoroExactTime(overallTime);
+            circleTimer.innerHTML = pomodoroExactTime(overallTime);
             overallTime--;
-            if (lastAngle >= full_angle || overallTime <= 0) {
+            if (lastAngle >= circleCircumference || overallTime < 0) {
                 window.clearInterval(pomoTimer);
                 lastAngle = 0;
                 circle.setAttribute("stroke", "#D1D9DF");
@@ -110,11 +105,21 @@ function pomodoroManager() {
             }
             else 
                 lastAngle += angleAddition;
-        }.bind(this), interval);
+        }, interval);
     }
 
     var start = function() {
-        setNextTimer();
+        if (isFirstInit) {
+            if(!breakSet) setBreak(breakTime);
+            if(!sessionSet) setSession(sessionTime);
+            isFirstInit = false;
+            startSession();
+        }
+        else if(isPaused) {
+            isPaused = false;
+            timerHandler();
+        }
+        else setNextTimer();    
     }
 
     var pomodoroExactTime = function(ds) {
@@ -123,11 +128,10 @@ function pomodoroManager() {
         var s = Math.floor(ds % 3600 % 60);
 
         return ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s); 
-
     }
 
     var isStarted = function() {
-        return pomoTimer;
+        return pomoTimer !== undefined && pomoTimer !== null;
     }
 
     return {

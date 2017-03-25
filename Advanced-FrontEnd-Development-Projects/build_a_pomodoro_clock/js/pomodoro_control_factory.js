@@ -5,8 +5,7 @@ function pomodoroControlFactory() {
         }
         else if(controlClass === 'pomodoro_session') {
             return PomodoroSessionControl;           
-        }        
-
+        }
     }
 
     return {
