@@ -46,3 +46,25 @@ html, body {
     background-color: rgba(220, 225, 229, 0.2);  
 }
 
+.game-board {
+    width:450px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    margin-top:100px;
+    border-radius: 51px;
+    border: 3px solid rgba(0, 0, 0, 0.05);   
+    padding: 10px;
+    background-color: rgba(215, 215, 220, 0.1);
+    
+}
+
+.game-board div {
+    flex-grow: 1;
+    width: 26%;
+    height: 100px;
+    margin:15px;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.05);    
+    background-color: rgba(158, 171, 181, 0.2);
+}

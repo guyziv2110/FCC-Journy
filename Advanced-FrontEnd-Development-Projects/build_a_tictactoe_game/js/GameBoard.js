@@ -1,5 +1,5 @@
 function GameBoard() {
-    var board = [
+    this.board = [
         ['', '', ''],
         ['', '', ''],
         ['', '', '']
