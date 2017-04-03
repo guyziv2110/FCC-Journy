@@ -4,7 +4,7 @@ function GameManagerUI(board) {
         for (i = 0; i < board.length; i++) {
             for (j = 0; j < board[i].length; j++) {
                 appended += String.format("\
-                    <div class='cell' id='cell{0}{1}'> {0}\
+                    <div class='cell' id='cell{0}{1}'> \
                     </div>", i, j );
             }
         }

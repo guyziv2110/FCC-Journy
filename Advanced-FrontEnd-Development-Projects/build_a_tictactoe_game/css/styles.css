@@ -43,7 +43,17 @@ html, body {
 }
 
 .setting-choice:hover {
-    background-color: rgba(220, 225, 229, 0.2);  
+    background-color: rgba(220, 225, 229, 0.2); 
+}
+
+.cell:hover:before {
+    font-family: 'FontAwesome';
+    content: "\f00d";
+}
+.cell:hover {
+    background-color: rgba(220, 225, 229, 0.3);
+    color:rgba(1, 1, 1, 0.3);
+    font-size:64px;
 }
 
 .game-board {
