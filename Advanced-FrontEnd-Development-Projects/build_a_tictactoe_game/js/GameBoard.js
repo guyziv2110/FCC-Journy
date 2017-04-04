@@ -12,5 +12,9 @@ function GameBoard() {
     var getItem = function(row, col) {
         return board[row][col];
     }
+
+    this.setItem = function(row, col, item) {
+        this.board[row][col] = item;
+    }
     
 }

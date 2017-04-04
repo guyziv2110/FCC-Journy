@@ -46,10 +46,16 @@ html, body {
     background-color: rgba(220, 225, 229, 0.2); 
 }
 
-.cell:hover:before {
+.cell-X:hover:before {
     font-family: 'FontAwesome';
     content: "\f00d";
 }
+
+.cell-O:hover:before {
+    font-family: 'FontAwesome';
+    content: "\f10c";
+}
+
 .cell:hover {
     background-color: rgba(220, 225, 229, 0.3);
     color:rgba(1, 1, 1, 0.3);

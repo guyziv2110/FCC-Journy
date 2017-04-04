@@ -17,8 +17,9 @@ if (!String.format) {
 
     $(document).ready(function() {
         $(".setting-choice").click(function(e) {
+            var playerType = e.currentTarget.className.indexOf('cross') > -1 ? 'X' : 'O';
             $(".game-settings").fadeOut().promise().done(function() {
-                gm.start();
+                gm.start(playerType);
             });
         }); 
     });

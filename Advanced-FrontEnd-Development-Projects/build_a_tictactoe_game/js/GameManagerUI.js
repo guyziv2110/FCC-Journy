@@ -1,11 +1,11 @@
 function GameManagerUI(board) {
-    var draw = function() {
+    var draw = function(playerType) {
         var appended = "";
         for (i = 0; i < board.length; i++) {
             for (j = 0; j < board[i].length; j++) {
                 appended += String.format("\
-                    <div class='cell' id='cell{0}{1}'> \
-                    </div>", i, j );
+                    <div class='cell cell-{2}' id='cell{0}{1}'> \
+                    </div>", i, j, playerType );
             }
         }
 
