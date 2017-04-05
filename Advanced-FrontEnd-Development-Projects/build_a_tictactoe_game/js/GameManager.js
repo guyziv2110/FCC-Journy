@@ -25,4 +25,15 @@ function GameManager() {
         });
     }
 
+    var checkForWinner = function() {
+        // row
+        var size = gameBoard.getSize();
+        var rowRes = true;
+        for (var i = 0; i < size; i++) {
+            for(var j = 0; j < size; j++) {
+                //
+            }
+        }
+    }
+
 }

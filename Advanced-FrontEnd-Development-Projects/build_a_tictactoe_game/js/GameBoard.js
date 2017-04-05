@@ -5,11 +5,15 @@ function GameBoard() {
         ['', '', '']
     ];
 
-    var isEmptyCell = function(row, col) {
+    this.getSize = function () {
+        return this.board[0].length;
+    }
+
+    this.isEmptyCell = function(row, col) {
         return board[row][col] === '';
     }
 
-    var getItem = function(row, col) {
+    this.getItem = function(row, col) {
         return board[row][col];
     }
 
