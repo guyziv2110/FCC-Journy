@@ -10,11 +10,11 @@ function GameBoard() {
     }
 
     this.isEmptyCell = function(row, col) {
-        return board[row][col] === '';
+        return this.board[row][col] === '';
     }
 
     this.getItem = function(row, col) {
-        return board[row][col];
+        return this.board[row][col];
     }
 
     this.setItem = function(row, col, item) {

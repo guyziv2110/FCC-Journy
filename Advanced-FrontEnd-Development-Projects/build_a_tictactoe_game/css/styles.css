@@ -62,6 +62,27 @@ html, body {
     font-size:64px;
 }
 
+.game-board .cell {
+    cursor: pointer;
+}
+
+.game-board .occupied-cell {
+    background-color: rgba(210, 155, 119, 0.2);
+    color:rgba(1, 1, 1, 0.3);
+    font-size:64px;
+    font-family: 'FontAwesome';
+}
+
+.occupied-cell-X:before {
+    font-family: 'FontAwesome';
+    content: "\f00d";
+}
+
+.occupied-cell-O:before {
+    font-family: 'FontAwesome';
+    content: "\f10c";
+}
+
 .game-board {
     width:450px;
     display: flex;

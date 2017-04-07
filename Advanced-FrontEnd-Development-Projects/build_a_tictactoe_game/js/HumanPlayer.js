@@ -1,4 +1,4 @@
-function HumanPlayer() {
+function HumanPlayer(gameBoard) {
     var removeBinders = function() {
         $('.cell').unbind();
     }
