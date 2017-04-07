@@ -15,6 +15,12 @@ function GameManager() {
     // access GameManagerUI to paint the board.
     // 
 
+    // TODO:
+    /* 1. recognize when the game ends (winner or no winner)
+       2. show the game over status on the screen and allow starting a new game.
+       3. check for bugs
+    */
+
     this.start = function(humDrawType) {
         humanDrawType = humDrawType;
         computerDrawType = getComputerDrawType();
