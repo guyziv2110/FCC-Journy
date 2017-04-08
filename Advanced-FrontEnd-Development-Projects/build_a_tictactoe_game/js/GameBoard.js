@@ -20,5 +20,19 @@ function GameBoard() {
     this.setItem = function(row, col, item) {
         this.board[row][col] = item;
     }
+
+    this.isFull = function () {
+        var res = true;
+
+        for (var i = 0; i < this.getSize() && res; i++) {
+            for (var j = 0; j < this.getSize() && res; j++) {
+                if(this.isEmptyCell(i, j)) 
+                    res = false;
+            }
+        }
+
+        return res;
+
+    }
     
 }

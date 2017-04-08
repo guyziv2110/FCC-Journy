@@ -1,6 +1,11 @@
 function WinnerSignal(winner) {
     this.winner = winner;
 };
+
+function GameEndsSignal() {
+
+};
+
 // controller
 function GameManager() {
     var gameBoard = new GameBoard(); // GameBoard instance
@@ -16,8 +21,10 @@ function GameManager() {
     // 
 
     // TODO:
-    /* 1. recognize when the game ends (winner or no winner)
+    /* 
        2. show the game over status on the screen and allow starting a new game.
+       3. color the winner cells
+       4.
        3. check for bugs
     */
 
@@ -41,27 +48,37 @@ function GameManager() {
         }).then(function() {
             if(checkForWinner())
                 throw new WinnerSignal(humanDrawType);
-            else
-                return computerPlayer.playTurn();;
+            else if (gameBoard.isFull())
+                throw new GameEndsSignal();
+            else 
+                return computerPlayer.playTurn();
         }).then(function(res) {
             gameBoard.setItem(res[0], res[1], computerDrawType);
             gameManagerUI.update();
-            setTimeout(function() {
-                gameplay();
-            }, 1);
+            if(checkForWinner())
+                throw new WinnerSignal(computerDrawType);
+            else if (gameBoard.isFull())
+                throw new GameEndsSignal();                
+            else {
+                setTimeout(function() {
+                    gameplay();
+                }, 1);
+            }
         }).catch(function(e) {
-            if(e instanceof WinnerSignal)
+            if(e instanceof WinnerSignal) {
+                gameManagerUI.lock();
                 console.log(e.winner);
+            }
+            else if(e instanceof GameEndsSignal) {
+                gameManagerUI.lock();
+                console.log("No one won");
+            }            
             else
                 throw e;
         });
     }
 
-    var checkForWinner = function() {
-        return checkForRowSeries();
-    }
-
-    var checkForRowSeries = function(size) {
+    var checkForWinner = function(size) {
         var size = gameBoard.getSize();
         var diagLeftCurrent = gameBoard.getItem(0, 0);
         var diagRightCurrent = gameBoard.getItem(0, size - 1);
@@ -73,38 +90,21 @@ function GameManager() {
             var rowCurrent = gameBoard.getItem(i, 0);
             var colCurrent = gameBoard.getItem(0, i);
             for(var j = 0; j < size; j++) {
-                if (!gameBoard.isEmptyCell(i, j) && gameBoard.getItem(i, j) === rowCurrent) {
+                if (!gameBoard.isEmptyCell(i, j) && gameBoard.getItem(i, j) === rowCurrent)
                     countRowSeries++;
-                }
-                if (!gameBoard.isEmptyCell(j, i) && gameBoard.getItem(j, i) === colCurrent) {
-                    countColSeries++;
-                }                
+
+                if (!gameBoard.isEmptyCell(j, i) && gameBoard.getItem(j, i) === colCurrent) 
+                    countColSeries++;   
             }
 
-            if (!gameBoard.isEmptyCell(i, i) && gameBoard.getItem(i, i) === diagLeftCurrent) {
+            if (!gameBoard.isEmptyCell(i, i) && gameBoard.getItem(i, i) === diagLeftCurrent) 
                 countLeftDiagSeries++;
-            }                    
 
-            if (!gameBoard.isEmptyCell(i, size - i - 1) && gameBoard.getItem(i, size - i - 1) === diagRightCurrent) {
+            if (!gameBoard.isEmptyCell(i, size - i - 1) && gameBoard.getItem(i, size - i - 1) === diagRightCurrent)
                 countRightDiagSeries++;
-            }   
 
-            if (countRowSeries === 3) {
-                return true;
-            }
-
-            if (countColSeries === 3) {
-                return true;
-            }            
-
-            if (countLeftDiagSeries === 3) {
-                return true;
-            }
-
-            if (countRightDiagSeries === 3) {
-                return true;
-            }               
-            
+            if (countRowSeries === 3 || countColSeries === 3 || countLeftDiagSeries === 3 || countRightDiagSeries === 3) 
+                return true;            
         }        
 
         return false;

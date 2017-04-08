@@ -23,8 +23,19 @@ function GameManagerUI(gameboard) {
         }        
     }
 
+    var lock = function() {
+        for (i = 0; i < gameboard.board.length; i++) {
+            for (j = 0; j < gameboard.board[i].length; j++) {   
+                if (gameboard.isEmptyCell(i, j)) {     
+                    $('#cell' + i + j).removeClass().addClass('locked-cell');
+                }
+            }
+        }
+    }
+
     return {
         draw: draw,
-        update: update
+        update: update,
+        lock: lock
     }
 }
