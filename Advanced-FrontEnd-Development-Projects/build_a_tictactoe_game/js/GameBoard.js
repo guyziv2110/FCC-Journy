@@ -5,6 +5,14 @@ function GameBoard() {
         ['', '', '']
     ];
 
+    this.reset = function() {
+        for (var i = 0; i < this.getSize(); i++) {
+            for (var j = 0; j < this.getSize(); j++) {
+                this.board[i][j] = '';
+            }
+        }
+    }
+    
     this.getSize = function () {
         return this.board[0].length;
     }

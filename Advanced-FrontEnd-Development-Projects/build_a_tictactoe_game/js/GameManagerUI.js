@@ -1,6 +1,8 @@
 function GameManagerUI(gameboard) {
     var draw = function(playerType) {
-        var appended = "";
+        $('.game-board').remove();
+
+        var appended = "<div class='game-board'>";
         for (i = 0; i < gameboard.board.length; i++) {
             for (j = 0; j < gameboard.board[i].length; j++) {
                 appended += String.format("\
@@ -9,7 +11,9 @@ function GameManagerUI(gameboard) {
             }
         }
 
-        $('.game-board').append(appended).show();
+        appended += "</div>";
+
+        $('.container').append(appended).show();
     }
 
     var update = function() {
@@ -33,9 +37,62 @@ function GameManagerUI(gameboard) {
         }
     }
 
+    var replay = function(winner) {
+        var appended = "";
+        var headerText = winner ? winner + " is the winner!" : "No one won";
+        appended += String.format("\
+                    <div class='game-replay'> \
+                        <h1>{0}<\h1> \
+                        <h2>Replay ?</h2> \
+                        <div class='replay-choices'> \
+                            <div class='replay-choice replay-choice-ok'> \
+                                <i class='fa fa-check' aria-hidden='true'></i> \
+                            </div> \
+                            <div class='replay-choice replay-choice-cancel'> \
+                                <i class='fa fa-close' aria-hidden='true'></i> \
+                            </div> \
+                        </div> \
+                    </div>", headerText);
+    
+        $('.container').append(appended);
+
+
+        return new Promise(function(resolve, reject) {
+            $('.replay-choice-ok').click(function() {
+                $('.game-replay').remove();
+                    resolve("OK"); 
+            });  
+
+            $('.replay-choice-cancel').click(function() {
+                $('.game-replay').remove();
+                    resolve("Cancel"); 
+            });              
+        });   
+    }
+
+    var quit = function() {
+        var appended = "";
+        appended += String.format("\
+                    <div class='game-quit'> \
+                        <div class='quit-message'> \
+                            This tab will be closed in few seconds \
+                        </div> \
+                    </div>");
+    
+        $('.container').append(appended);
+
+
+        return new Promise(function(resolve, reject) {
+            $('.game-replay').remove();
+                resolve("Ok"); 
+        });   
+    }
+
     return {
         draw: draw,
         update: update,
-        lock: lock
+        lock: lock,
+        replay: replay,
+        quit: quit
     }
 }

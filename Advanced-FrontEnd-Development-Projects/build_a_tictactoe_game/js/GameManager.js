@@ -14,6 +14,7 @@ function GameManager() {
     var computerPlayer = new ComputerPlayer(gameBoard);
     var humanDrawType;
     var computerDrawType;
+    var that = this;
     // working on game board design
      
     // methods 
@@ -28,7 +29,19 @@ function GameManager() {
        3. check for bugs
     */
 
+    this.quit = function() {
+        gameManagerUI.quit().then(function() {
+            setTimeout(function() {
+                window.close();
+            }, 3000);
+            
+        });;
+
+        
+    }
+
     this.start = function(humDrawType) {
+        gameBoard.reset();
         humanDrawType = humDrawType;
         computerDrawType = getComputerDrawType();
         gameManagerUI.draw(humanDrawType);
@@ -67,11 +80,24 @@ function GameManager() {
         }).catch(function(e) {
             if(e instanceof WinnerSignal) {
                 gameManagerUI.lock();
+                gameManagerUI.replay(e.winner).then(function(res) {
+                    if (res === "OK")
+                        that.start(humanDrawType);
+                    else  {
+                        that.quit();
+                    }
+                });;
                 console.log(e.winner);
             }
             else if(e instanceof GameEndsSignal) {
                 gameManagerUI.lock();
-                console.log("No one won");
+                gameManagerUI.replay().then(function(res) {
+                    if (res === "OK")
+                        that.start(humanDrawType);
+                    else  {
+                        that.quit();
+                    }
+                });;
             }            
             else
                 throw e;
