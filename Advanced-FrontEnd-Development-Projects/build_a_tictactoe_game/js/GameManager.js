@@ -15,29 +15,13 @@ function GameManager() {
     var humanDrawType;
     var computerDrawType;
     var that = this;
-    // working on game board design
-     
-    // methods 
-    // access GameManagerUI to paint the board.
-    // 
-
-    // TODO:
-    /* 
-       2. show the game over status on the screen and allow starting a new game.
-       3. color the winner cells
-       4.
-       3. check for bugs
-    */
 
     this.quit = function() {
         gameManagerUI.quit().then(function() {
             setTimeout(function() {
                 window.close();
             }, 3000);
-            
-        });;
-
-        
+        });;        
     }
 
     this.start = function(humDrawType) {
