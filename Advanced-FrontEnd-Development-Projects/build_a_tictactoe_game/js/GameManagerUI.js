@@ -1,4 +1,4 @@
-function GameManagerUI(gameboard) {
+function gameManagerUI(gameboard) {
     var draw = function(playerType) {
         $('.game-board').remove();
 
@@ -60,12 +60,12 @@ function GameManagerUI(gameboard) {
         return new Promise(function(resolve, reject) {
             $('.replay-choice-ok').click(function() {
                 $('.game-replay').remove();
-                    resolve("OK"); 
+                    resolve(true); 
             });  
 
             $('.replay-choice-cancel').click(function() {
                 $('.game-replay').remove();
-                    resolve("Cancel"); 
+                    resolve(false); 
             });              
         });   
     }
@@ -84,7 +84,7 @@ function GameManagerUI(gameboard) {
 
         return new Promise(function(resolve, reject) {
             $('.game-replay').remove();
-                resolve("Ok"); 
+                resolve(true); 
         });   
     }
 

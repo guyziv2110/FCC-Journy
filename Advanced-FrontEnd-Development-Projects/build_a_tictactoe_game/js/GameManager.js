@@ -1,23 +1,16 @@
-function WinnerSignal(winner) {
-    this.winner = winner;
-};
-
-function GameEndsSignal() {
-
-};
-
 // controller
 function GameManager() {
-    var gameBoard = new GameBoard(); // GameBoard instance
-    var gameManagerUI = GameManagerUI(gameBoard);
+    var gameBoard = new GameBoard();
+    var gameManagerUIPtr = gameManagerUI(gameBoard);
     var humanPlayer = new HumanPlayer(gameBoard);
     var computerPlayer = new ComputerPlayer(gameBoard);
     var humanDrawType;
     var computerDrawType;
     var that = this;
+    var gameSignals = signals();
 
     this.quit = function() {
-        gameManagerUI.quit().then(function() {
+        gameManagerUIPtr.quit().then(function() {
             setTimeout(function() {
                 window.close();
             }, 3000);
@@ -28,7 +21,7 @@ function GameManager() {
         gameBoard.reset();
         humanDrawType = humDrawType;
         computerDrawType = getComputerDrawType();
-        gameManagerUI.draw(humanDrawType);
+        gameManagerUIPtr.draw(humanDrawType);
         gameplay();
     }
 
@@ -41,31 +34,31 @@ function GameManager() {
         promise.then(function(res) {
             var rowcol = res.replace('cell', '');
             gameBoard.setItem(rowcol[0], rowcol[1], humanDrawType);
-            gameManagerUI.update();
+            gameManagerUIPtr.update();
         }).then(function() {
             if(checkForWinner())
-                throw new WinnerSignal(humanDrawType);
+                throw new gameSignals.WinnerSignal(humanDrawType);
             else if (gameBoard.isFull())
-                throw new GameEndsSignal();
+                throw new gameSignals.GameEndsSignal();
             else 
                 return computerPlayer.playTurn();
         }).then(function(res) {
             gameBoard.setItem(res[0], res[1], computerDrawType);
-            gameManagerUI.update();
+            gameManagerUIPtr.update();
             if(checkForWinner())
-                throw new WinnerSignal(computerDrawType);
+                throw new gameSignals.WinnerSignal(computerDrawType);
             else if (gameBoard.isFull())
-                throw new GameEndsSignal();                
+                throw new gameSignals.GameEndsSignal();                
             else {
                 setTimeout(function() {
                     gameplay();
                 }, 1);
             }
         }).catch(function(e) {
-            if(e instanceof WinnerSignal) {
-                gameManagerUI.lock();
-                gameManagerUI.replay(e.winner).then(function(res) {
-                    if (res === "OK")
+            if(e instanceof gameSignals.WinnerSignal) {
+                gameManagerUIPtr.lock();
+                gameManagerUIPtr.replay(e.winner).then(function(res) {
+                    if (res)
                         that.start(humanDrawType);
                     else  {
                         that.quit();
@@ -73,10 +66,10 @@ function GameManager() {
                 });;
                 console.log(e.winner);
             }
-            else if(e instanceof GameEndsSignal) {
-                gameManagerUI.lock();
-                gameManagerUI.replay().then(function(res) {
-                    if (res === "OK")
+            else if(e instanceof gameSignals.GameEndsSignal) {
+                gameManagerUIPtr.lock();
+                gameManagerUIPtr.replay().then(function(res) {
+                    if (res)
                         that.start(humanDrawType);
                     else  {
                         that.quit();

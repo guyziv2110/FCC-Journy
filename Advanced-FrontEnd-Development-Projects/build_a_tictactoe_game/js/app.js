@@ -12,7 +12,6 @@ if (!String.format) {
 
 
 (function() {
-
     var gm = new GameManager();
 
     $(document).ready(function() {
@@ -23,12 +22,5 @@ if (!String.format) {
             });
         }); 
     });
-
-
-    function initialization(playerSelection) {
-        // playerSelection X or 0
-
-        // GameManager.startGame().
-    }
-
+    
 })();
