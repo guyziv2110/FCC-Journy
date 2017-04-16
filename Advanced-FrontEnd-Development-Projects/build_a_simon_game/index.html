@@ -7,8 +7,48 @@
     </head>
     <body>
         <div class="container">
+            <div class="simon-wrapper">
+                <div class="simon-boxes-wrapper">
+                    <div class="simon-row">
+                        <div class="simon-box-top-left simon-box green"></div>
+                        <div class="simon-box-top-right simon-box red"></div>
+                    </div>
+                    <div class="simon-row">
+                        <div class="simon-box-bottom-left simon-box yellow"></div>
+                        <div class="simon-box-bottom-right simon-box blue"></div>
+                    </div>     
+                </div>
+
+                <div class="simon-board">
+                    <h1 class="simon-header">Simon</h1>
+                    <div class="simon-row">
+                        <div class="simon-counter-wrapper simon-inline">
+                            <h1 class="simon-counter simon-led-off">--</h1>
+                            <h3 class="simon-label">COUNT</h3>
+                        </div>
+                        <div class="simon-btn-box simon-inline">
+                            <div class="simon-round-btn simon-red-btn" id="simon-start"></div>
+                            <h3 class="simon-label">START</h3>
+                        </div>
+                        <div class="simon-btn-box simon-inline">
+                            <div class="simon-round-btn" id="simon-mode"></div>
+                            <h3 class="simon-label">STRICT</h3>
+                            <div class="simon-led" id="simon-mode-led"></div>
+                        </div>
+                    </div>
+                    <div class="simon-rw">
+                        <h3 class="simon-label simon-inline">OFF</h3>
+                        <div class="simon-switch-slot simon-inline">
+                            <div class="simon-switch" id="simon-power-switch"></div>
+                        </div>
+                        <h3 class="simon-label simon-inline">ON</h3>
+                    </div>
+                </div>
+            </div>  
+
         </div>
 
+ 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script src="js/app.js"></script>
     </body>
