@@ -21,7 +21,16 @@ function SimonManager(simonUIElements) {
         var that = this;
 
         Object.keys(simonUIElements).forEach(function(elementKey) {
-            simonUIElementsMapping['' + elementKey] = $(simonUIElements[elementKey])
+            if(typeof simonUIElements[elementKey] === 'object') {
+                var arr = [];
+                for (var i = 0; i < simonUIElements[elementKey].length; i++) {
+                    arr[i] = $(simonUIElements[elementKey][i]);
+                }
+
+                simonUIElementsMapping['' + elementKey] = arr;
+            }
+            else
+                simonUIElementsMapping['' + elementKey] = $(simonUIElements[elementKey])
         });
         
         simonUIElementsMapping.simonSwitchContainer.click(function() {
@@ -36,6 +45,14 @@ function SimonManager(simonUIElements) {
         return activated;
     }
 
+    this.isStarted = function() {
+        return started;
+    }
+
+    this.isStrictMode = function() {
+        return strictMode;
+    }
+
     this.activate = function() {
         activated = true;
         simonUIElementsMapping.simonCounter.removeClass('simon-led-off');
@@ -44,11 +61,12 @@ function SimonManager(simonUIElements) {
 
     this.start = function() {
         started = true;
+        simonGameplay.init();
         simonGameplay.runGameplay(
             {
-                isStrictMode: strictMode,
-                isActivated: activated,
-                isStarted: started
+                isStrictMode: this.isStrictMode,
+                isActivated: this.isActivated,
+                isStarted: this.isStarted
             }
         );
     }
@@ -59,6 +77,7 @@ function SimonManager(simonUIElements) {
 
         // game reset - state of random colors and score
         // count clean
+        simonGameplay.clear();
         reset();
         simonUIElementsMapping.simonCounter.text('--');
         simonUIElementsMapping.simonCounter.addClass('simon-led-off');

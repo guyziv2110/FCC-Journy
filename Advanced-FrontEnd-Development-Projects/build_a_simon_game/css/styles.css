@@ -31,20 +31,37 @@
 }
 
 .green {
-    background-color: #6ac76c;
+    background-color: #26a529;
 }
 
 .red {
-    background-color: #ed4949;
+    background-color: #9e1c1c;
 }
 
 .yellow {
-    background-color: #e9e23d;
+    background-color: #a29d1f;
 }
 
 .blue {
-    background-color: #1ba2df;
+    background-color: #267496;
 }
+
+.green.light{
+  background-color : #00ff06;
+}
+
+.red.light{
+  background-color : #ff0000;
+}
+
+.yellow.light{
+  background-color : #fff500;
+}
+
+.blue.light{
+  background-color : #00b2ff;
+}
+
 
 .simon-wrapper {
   width: 472px;
