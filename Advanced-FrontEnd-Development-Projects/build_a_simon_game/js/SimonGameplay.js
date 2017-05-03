@@ -128,21 +128,39 @@ function SimonGameplay(simonUIElementsMapping) {
         var colorIndex = 0;
         var selection;
 
+        // userClick
+        // should happen immedatley and not after 2000 ms.
+        selectionPromise.then(function(res) {
+            userSelectedBox = true;
+            
+            var selectedSimonBoxColorIndex = res.replace(/\D/g, '');
+            
+            
+            if(selectedSimonBoxColorIndex !== sequence[colorIndex]) {
+                // gameover
+            }
+
+            colorIndex++;
+            /*
+                if(sequence.length === colorIndex) {
+                    clearInterval(timer);
+                }
+                else {
+                    var currentSimonBox = simonUIElementsMapping.simonBoxes[sequence[colorIndex]];
+                
+                    
+                    colorIndex++;
+                }
+            */            
+        });
+
         timer = setInterval(function() {
-            if(sequence.length === colorIndex) {
-                clearInterval(timer);
+            if (!userSelectedBox) {
+                // game over the player didn't select any box.
             }
-            else {
-                var currentSimonBox = simonUIElementsMapping.simonBoxes[sequence[colorIndex]];
-                
-                // userClick
-                // should happen immedatley and not after 2000 ms.
-                selectionPromise.then(function(res) {
-                    alert(res);
-                });
-                
-                colorIndex++;
-            }
+
+            // reset selection.
+            userSelectedBox = false;
         }, 2000);
     }
 
