@@ -114,6 +114,7 @@ function SimonGameplay(simonUIElementsMapping) {
 
     this.boxClickHandler = function() {
         // dealing with single promise 
+        // using events
         selectionPromise = new Promise(function (resolve, reject) {
             for(var i = 0; i < simonUIElementsMapping.simonBoxes.length; i++) {
                 simonUIElementsMapping.simonBoxes[i].click(function(ev) {
