@@ -30,6 +30,17 @@
     font-size: 0px;
 }
 
+.clickable {
+    cursor:pointer !important;
+    pointer-events: all !important;
+}
+
+.unclickable {
+    cursor: default;
+    pointer-events: none;
+
+}
+
 .green {
     background-color: #26a529;
 }

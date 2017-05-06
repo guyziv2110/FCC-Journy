@@ -60,13 +60,15 @@ function SimonManager(simonUIElements) {
     }
 
     this.start = function() {
+        simonGameplay.clear();
         started = true;
         simonGameplay.init();
         simonGameplay.runGameplay(
             {
                 isStrictMode: this.isStrictMode,
                 isActivated: this.isActivated,
-                isStarted: this.isStarted
+                isStarted: this.isStarted,
+                restart: this.start.bind(this)
             }
         );
     }

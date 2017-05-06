@@ -3,6 +3,7 @@ function SimonGameplay(simonUIElementsMapping) {
     // possible values indicating colors: 0, 1, 2, 3 
     var sequence = [];
     var selectionPromise;
+    var gameSignals = signals();
 
     this.init = function() {
         sequence = [];
@@ -12,7 +13,15 @@ function SimonGameplay(simonUIElementsMapping) {
 
     this.clear = function() {
         this. clearSimonBox();
+        this.clearEvents();
         clearInterval(timer);
+    }
+
+    this.clearEvents = function() {
+        events.removeAll();
+
+        for (var i = 0; i < simonUIElementsMapping.simonBoxes.length; i++) 
+            simonUIElementsMapping.simonBoxes[i].unbind('click');
     }
 
     this.clearSimonBox = function() {
@@ -39,16 +48,46 @@ function SimonGameplay(simonUIElementsMapping) {
 
             quickMessage(sequence.length)
             .then(colorBlinkingAndTonesPlaying)
+            .then(doInteractive)
             .then(userResponse)
-            .then(generateNewColor)
-            .then(() => this.runGameplayInternal(simonManagerFunctions));
-            
+            .then((res) => {
+                undoInteractive();
+                if(!res && simonManagerFunctions.isStrictMode()) {
+                     throw new gameSignals.RestartGame();
+                }
+                else if(!res && !simonManagerFunctions.isStrictMode()) {
+                     return flashMessage("!!", 3)
+                }
+                else {
+                    return generateNewColor();
+                }
+                    
+            })
+            .then(() => this.runGameplayInternal(simonManagerFunctions))
+            .catch(function(e) {
+                if(e instanceof gameSignals.RestartGame) {
+                    quickMessage("!!");
+                    simonManagerFunctions.restart();
+                }
+            });
             // handle color blinking
             // setTimeout waiting for user to mimic
             // respond to the user clicks.
             // decide on next action by the strict mode
         }        
     }
+
+    var doInteractive = function() {
+        for(var i = 0; i < simonUIElementsMapping.simonBoxes.length; i++) {   
+            simonUIElementsMapping.simonBoxes[i].addClass('clickable');
+        }
+    }
+
+    var undoInteractive = function() {   
+        for(var i = 0; i < simonUIElementsMapping.simonBoxes.length; i++) {   
+            simonUIElementsMapping.simonBoxes[i].removeClass('clickable');
+        }            
+    }    
 
     var emptyPromise = function() {
         return new Promise(function (resolve, reject) {     
@@ -66,6 +105,7 @@ function SimonGameplay(simonUIElementsMapping) {
     var flashMessage = function(msg, times) {
         return new Promise(function (resolve, reject) {     
             var counter = 0;
+            simonUIElementsMapping.simonCounter.text(msg);
             timer = setInterval(function() {
                 if(times === counter) {
                     clearInterval(timer);
@@ -101,14 +141,54 @@ function SimonGameplay(simonUIElementsMapping) {
                     
                     colorIndex++;
                 }
-            }, 2000);
+            }, 1450);
         });
     }
 
 
     var userResponse = function() {
         return new Promise(function (resolve, reject) {    
-            boxClick();             
+            var colorIndex = 0;
+            var selection;
+            var userSelectedBox = false;
+
+            var subscription = events.subscribe('clickedBox', function(obj) {
+                var selectedSimonBoxColorIndex = parseInt(obj.boxId.replace(/\D/g, ''));
+                userSelectedBox = true;
+
+                var currentSimonBox = simonUIElementsMapping.simonBoxes[selectedSimonBoxColorIndex];
+                currentSimonBox.addClass('light');
+                // fix it - if user fails on last attempt the clicked isn't indicated!
+                setTimeout(function(){
+                    currentSimonBox.removeClass('light');
+                },250);
+
+                if(selectedSimonBoxColorIndex !== sequence[colorIndex]) {
+                    clearInterval(timer);
+                    resolve(false);
+                }
+                else {                
+                    colorIndex++;
+
+                    if (colorIndex === sequence.length)
+                    {
+                        clearInterval(timer);
+                        subscription.remove();
+                        resolve(true);
+
+                    }
+                }
+            });        
+
+            timer = setInterval(function() {
+                if (!userSelectedBox) {
+                    clearInterval(timer);
+                    resolve(false);
+                }
+
+                // reset selection.
+                userSelectedBox = false;
+            }, 2000);        
         });
     }
 
@@ -118,7 +198,10 @@ function SimonGameplay(simonUIElementsMapping) {
         selectionPromise = new Promise(function (resolve, reject) {
             for(var i = 0; i < simonUIElementsMapping.simonBoxes.length; i++) {
                 simonUIElementsMapping.simonBoxes[i].click(function(ev) {
-                    resolve(ev.target.id);
+                    events.publish('clickedBox', {
+                        boxId: ev.target.id // any argument
+                    });                    
+                    //resolve(ev.target.id);
                 });
             }
         });
@@ -126,51 +209,11 @@ function SimonGameplay(simonUIElementsMapping) {
 
     }
 
-    var boxClick = function() {   
-        var colorIndex = 0;
-        var selection;
-
-        // userClick
-        // should happen immedatley and not after 2000 ms.
-        selectionPromise.then(function(res) {
-            userSelectedBox = true;
-            
-            var selectedSimonBoxColorIndex = res.replace(/\D/g, '');
-            
-            
-            if(selectedSimonBoxColorIndex !== sequence[colorIndex]) {
-                // gameover
-            }
-
-            colorIndex++;
-            /*
-                if(sequence.length === colorIndex) {
-                    clearInterval(timer);
-                }
-                else {
-                    var currentSimonBox = simonUIElementsMapping.simonBoxes[sequence[colorIndex]];
-                
-                    
-                    colorIndex++;
-                }
-            */            
-        });
-
-        timer = setInterval(function() {
-            if (!userSelectedBox) {
-                // game over the player didn't select any box.
-            }
-
-            // reset selection.
-            userSelectedBox = false;
-        }, 2000);
-    }
-
-    var generateNewColor = function() {
+    var generateNewColor = function() { 
         return new Promise(function (resolve, reject) {    
             sequence.push(Math.floor(Math.random() * 4));
-            resolve('0');
-        });        
+            resolve(true);
+        });
     }
 
 }
