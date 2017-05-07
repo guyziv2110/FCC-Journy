@@ -123,6 +123,10 @@ function SimonGameplay(simonUIElementsMapping) {
         });
     }
 
+    var playTone = function(toneId) {
+        simonUIElementsMapping.simonBoxesAudios[toneId].play();
+    }
+
     var colorBlinkingAndTonesPlaying = function() {
         return new Promise(function (resolve, reject) {     
             var colorIndex = 0;
@@ -133,7 +137,7 @@ function SimonGameplay(simonUIElementsMapping) {
                 }
                 else {
                     var currentSimonBox = simonUIElementsMapping.simonBoxes[sequence[colorIndex]];
-                    // playTone...
+                    playTone(colorIndex);
                     currentSimonBox.addClass('light');
                     setTimeout(function(){
                         currentSimonBox.removeClass('light');
@@ -153,31 +157,31 @@ function SimonGameplay(simonUIElementsMapping) {
             var userSelectedBox = false;
 
             var subscription = events.subscribe('clickedBox', function(obj) {
-                var selectedSimonBoxColorIndex = parseInt(obj.boxId.replace(/\D/g, ''));
                 userSelectedBox = true;
 
+                var selectedSimonBoxColorIndex = parseInt(obj.boxId.replace(/\D/g, ''));
                 var currentSimonBox = simonUIElementsMapping.simonBoxes[selectedSimonBoxColorIndex];
+
                 currentSimonBox.addClass('light');
-                // fix it - if user fails on last attempt the clicked isn't indicated!
                 setTimeout(function(){
                     currentSimonBox.removeClass('light');
-                },250);
 
-                if(selectedSimonBoxColorIndex !== sequence[colorIndex]) {
-                    clearInterval(timer);
-                    resolve(false);
-                }
-                else {                
-                    colorIndex++;
-
-                    if (colorIndex === sequence.length)
-                    {
+                    if(selectedSimonBoxColorIndex !== sequence[colorIndex]) {
                         clearInterval(timer);
-                        subscription.remove();
-                        resolve(true);
-
+                        resolve(false);
                     }
-                }
+                    else {                
+                        colorIndex++;
+
+                        if (colorIndex === sequence.length)
+                        {
+                            clearInterval(timer);
+                            subscription.remove();
+                            resolve(true);
+
+                        }
+                    }
+                },250);
             });        
 
             timer = setInterval(function() {

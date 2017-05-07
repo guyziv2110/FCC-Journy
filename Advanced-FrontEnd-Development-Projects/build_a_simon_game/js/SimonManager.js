@@ -21,7 +21,10 @@ function SimonManager(simonUIElements) {
         var that = this;
 
         Object.keys(simonUIElements).forEach(function(elementKey) {
-            if(typeof simonUIElements[elementKey] === 'object') {
+            if(elementKey === 'simonBoxesAudios') {
+                simonUIElementsMapping['' + elementKey] = simonUIElements[elementKey];
+            }    
+            else if(typeof simonUIElements[elementKey] === 'object') {
                 var arr = [];
                 for (var i = 0; i < simonUIElements[elementKey].length; i++) {
                     arr[i] = $(simonUIElements[elementKey][i]);
