@@ -159,8 +159,7 @@ function SimonGameplay(simonUIElementsMapping) {
             var subscription = events.subscribe('clickedBox', function(obj) {
                 userSelectedBox = true;
 
-                var selectedSimonBoxColorIndex = parseInt(obj.boxId.replace(/\D/g, ''));
-                
+                var selectedSimonBoxColorIndex = parseInt(obj.boxId.replace(/\D/g, ''));         
                 var currentSimonBox = simonUIElementsMapping.simonBoxes[selectedSimonBoxColorIndex];
 
                 currentSimonBox.addClass('light');
