@@ -137,15 +137,15 @@ function SimonGameplay(simonUIElementsMapping) {
                 }
                 else {
                     var currentSimonBox = simonUIElementsMapping.simonBoxes[sequence[colorIndex]];
-                    playTone(colorIndex);
+                    playTone(sequence[colorIndex]);
                     currentSimonBox.addClass('light');
                     setTimeout(function(){
                         currentSimonBox.removeClass('light');
-                    },1250);
+                    }, 650);
                     
                     colorIndex++;
                 }
-            }, 1450);
+            }, 800);
         });
     }
 
@@ -160,6 +160,7 @@ function SimonGameplay(simonUIElementsMapping) {
                 userSelectedBox = true;
 
                 var selectedSimonBoxColorIndex = parseInt(obj.boxId.replace(/\D/g, ''));
+                
                 var currentSimonBox = simonUIElementsMapping.simonBoxes[selectedSimonBoxColorIndex];
 
                 currentSimonBox.addClass('light');
@@ -167,10 +168,12 @@ function SimonGameplay(simonUIElementsMapping) {
                     currentSimonBox.removeClass('light');
 
                     if(selectedSimonBoxColorIndex !== sequence[colorIndex]) {
+                        playTone('err');
                         clearInterval(timer);
                         resolve(false);
                     }
-                    else {                
+                    else {    
+                        playTone(selectedSimonBoxColorIndex);            
                         colorIndex++;
 
                         if (colorIndex === sequence.length)
@@ -181,7 +184,7 @@ function SimonGameplay(simonUIElementsMapping) {
 
                         }
                     }
-                },250);
+                },75);
             });        
 
             timer = setInterval(function() {

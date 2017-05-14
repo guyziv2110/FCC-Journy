@@ -18,6 +18,7 @@
               '1': new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
               '2': new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
               '3': new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'),
+              'err': new Audio('https://s3.eu-west-2.amazonaws.com/guyziv2110/error.mp3')
             }
         }
     );
